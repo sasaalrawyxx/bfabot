@@ -1,238 +1,374 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BFA BOT | الموقع الرسمي</title>
+    <title>BFA BOT | أقوى بوت للعبة Conquer Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png">
+    
     <style>
-        /* إعدادات الألوان والخطوط الأساسية */
         :root {
-            --primary-blue: #007bff;
+            --primary-blue: #0056b3;
             --neon-blue: #00d2ff;
-            --dark-bg: #050505;
-            --card-bg: #111111;
+            --dark-bg: #030303;
+            --card-bg: #0f0f13;
             --text-light: #ffffff;
-            --text-gray: #cccccc;
+            --text-gray: #b3b3b3;
+            --discord: #5865F2;
+            --whatsapp: #25D366;
+            --youtube: #FF0000;
+            --facebook: #1877F2;
+            --binance: #F3BA2F;
+            --vodafone: #E60000;
         }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
+
         body {
             background-color: var(--dark-bg);
             color: var(--text-light);
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* شريط التنقل (Navbar) */
+        /* تأثير الخلفية الشبكية */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        /* شريط التنقل */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
-            background-color: rgba(0, 0, 0, 0.85);
-            border-bottom: 1px solid #1a1a1a;
+            padding: 15px 50px;
+            background-color: rgba(3, 3, 3, 0.9);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.1);
         }
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 900;
             color: var(--text-light);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
-        .logo span {
+
+        .logo-text span {
             color: var(--neon-blue);
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
         }
+
         .nav-links a {
             color: var(--text-light);
             text-decoration: none;
             margin: 0 15px;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
+            transition: 0.3s;
         }
+
         .nav-links a:hover {
             color: var(--neon-blue);
-            text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
         }
 
-        /* القسم الرئيسي (Hero Section) */
+        /* القسم الرئيسي */
         .hero {
             text-align: center;
-            padding: 140px 20px;
-            background: radial-gradient(circle at top center, #0a192f 0%, var(--dark-bg) 70%);
-            min-height: 80vh;
+            padding: 120px 20px 80px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-        }
-        .hero h1 {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to left, var(--neon-blue), var(--primary-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 40px;
-            max-width: 650px;
-        }
-        .btn-container {
-            display: flex;
             gap: 20px;
         }
-        .btn {
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .btn-primary {
-            color: #fff;
-            background: var(--primary-blue);
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
-        }
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.7);
-        }
-        .btn-secondary {
-            color: var(--text-light);
-            background: transparent;
-            border: 1px solid #333;
-        }
-        .btn-secondary:hover {
-            border-color: var(--primary-blue);
-            background: rgba(0, 123, 255, 0.1);
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
-        /* قسم المميزات (Features) */
-        .features {
-            padding: 80px 20px;
-            text-align: center;
-            background-color: var(--dark-bg);
+        .hero h1 span {
+            color: var(--neon-blue);
         }
-        .features h2 {
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: var(--text-light);
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin-bottom: 30px;
         }
-        .cards {
+
+        /* الأزرار */
+        .btn-group {
             display: flex;
-            justify-content: center;
-            gap: 30px;
+            gap: 15px;
             flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-discord {
+            background-color: var(--discord);
+            color: white;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+        }
+        .btn-discord:hover { background-color: #4752c4; transform: translateY(-3px); }
+
+        .btn-youtube {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--youtube);
+        }
+        .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.1); border-color: #ff3333; transform: translateY(-3px); }
+
+        /* الأقسام المشتركة */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--neon-blue);
+        }
+
+        section {
+            padding: 80px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
-        .card {
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 12px;
-            width: 320px;
-            border: 1px solid #1f1f1f;
-            transition: transform 0.4s, border-color 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
-        .card:hover::before {
-            transform: translateX(100%);
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-blue);
-            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
-        }
-        .card h3 {
-            color: var(--neon-blue);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        .card p {
-            color: var(--text-gray);
-            font-size: 1rem;
+
+        /* المميزات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        /* التذييل (Footer) */
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--neon-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+        }
+
+        /* طرق الدفع */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .payment-card {
+            background: linear-gradient(145deg, #111, #0a0a0a);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .payment-card.vf::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--vodafone); }
+        .payment-card.binance::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--binance); }
+
+        .payment-card h3 { font-size: 1.8rem; margin: 15px 0; }
+        .payment-numbers { font-size: 1.4rem; font-weight: bold; color: var(--neon-blue); margin: 20px 0; letter-spacing: 2px; }
+
+        /* التواصل */
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 1px solid #222;
+        }
+
+        .social-box i { font-size: 3rem; margin-bottom: 15px; transition: 0.3s; }
+        
+        .social-box.fb:hover { border-color: var(--facebook); box-shadow: 0 0 20px rgba(24, 119, 242, 0.2); }
+        .social-box.fb:hover i { color: var(--facebook); }
+
+        .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); }
+        .social-box.wa:hover i { color: var(--whatsapp); }
+
+        /* الفوتر */
         footer {
             text-align: center;
             padding: 30px;
             background: #000;
-            border-top: 1px solid #1a1a1a;
-            color: var(--text-gray);
+            border-top: 1px solid #111;
+            margin-top: 50px;
         }
-        
-        /* التجاوب مع شاشات الهواتف */
+
+        /* الموبايل */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            nav { flex-direction: column; gap: 15px; padding: 20px; }
-            .btn-container { flex-direction: column; }
+            nav { flex-direction: column; gap: 15px; padding: 15px; }
+            .hero h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">BFA <span>BOT</span></div>
+        <a href="#" class="logo-container">
+            <img src="logo.png" alt="BFA Bot Logo" class="logo-img">
+            <div class="logo-text">BFA <span>BOT</span></div>
+        </a>
         <div class="nav-links">
-            <a href="#home">الرئيسية</a>
             <a href="#features">المميزات</a>
-            <a href="#about">حول البوت</a>
+            <a href="#payment">الاشتراك والدفع</a>
+            <a href="#contact">التواصل</a>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <h1>BFA BOT</h1>
-        <p>الأداة الأقوى والأكثر تطوراً لتسهيل مهامك. تم تصميم البوت باحترافية ليوفر لك أداءً فائقاً، سرعة استجابة عالية، وتحكماً كاملاً بكل سهولة.</p>
-        <div class="btn-container">
-            <a href="#" class="btn btn-primary">تحميل البوت</a>
-            <a href="#features" class="btn btn-secondary">اكتشف المزيد</a>
+    <section class="hero">
+        <h1>السيطرة الكاملة في <span>Conquer Online</span></h1>
+        <p>طور مستوى شخصيتك، ضاعف أرباحك، وتحكم في حساباتك بالكامل مع BFA Bot. الأداة الأذكى والأكثر أماناً المصممة خصيصاً لتلبية احتياجاتك في اللعبة.</p>
+        
+        <div class="btn-group">
+            <a href="https://discord.gg/qBDhNqDCnA" target="_blank" class="btn btn-discord">
+                <i class="fa-brands fa-discord"></i> انضم لسيرفر الديسكورد
+            </a>
+            <a href="https://www.youtube.com/@BFA1411" target="_blank" class="btn btn-youtube">
+                <i class="fa-brands fa-youtube"></i> شروحات البوت
+            </a>
         </div>
     </section>
 
-    <section id="features" class="features">
-        <h2>لماذا BFA BOT هو خيارك الأفضل؟</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>أداء فائق السرعة</h3>
-                <p>تم بناء البوت باستخدام أحدث التقنيات لضمان استجابة فورية وتنفيذ المهام المعقدة في أجزاء من الثانية دون أي تقطيع.</p>
+    <section id="features">
+        <h2 class="section-title">لماذا BFA Bot؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-crosshairs feature-icon"></i>
+                <h3>صيد وتلفيل تلقائي</h3>
+                <p>نظام ذكي للزراعة (Farming) ورفع المستوى التلقائي، يعمل بكفاءة عالية على مدار الساعة لتطوير شخصيتك دون تدخل منك.</p>
             </div>
-            <div class="card">
-                <h3>حماية وأمان</h3>
-                <p>نولي اهتماماً كبيراً لخصوصيتك. البوت مزود بأنظمة تشفير متقدمة لضمان بقاء بياناتك وحساباتك في أمان تام.</p>
+            <div class="feature-card">
+                <i class="fa-solid fa-store feature-icon"></i>
+                <h3>نظام التاجر الآلي (Auto-Seller)</h3>
+                <p>نظام متطور لإدارة المبيعات والتجارة داخل اللعبة (CPs & Silver) مع إمكانيات فائقة لتسهيل عمليات التبادل.</p>
             </div>
-            <div class="card">
-                <h3>واجهة تحكم بسيطة</h3>
-                <p>لا تحتاج لخبرة برمجية لاستخدامه. واجهة المستخدم مصممة لتكون واضحة، سلسة، وتلبي احتياجات المبتدئين والمحترفين.</p>
+            <div class="feature-card">
+                <i class="fa-solid fa-shield-halved feature-icon"></i>
+                <h3>أمان وتخفي عالي</h3>
+                <p>برمجة احترافية تضمن استقرار البوت وحماية حساباتك من الحظر، مع تحديثات مستمرة لتخطي أنظمة حماية اللعبة.</p>
             </div>
+        </div>
+    </section>
+
+    <section id="payment">
+        <h2 class="section-title">طرق الدفع والاشتراك</h2>
+        <div class="payment-grid">
+            <div class="payment-card vf">
+                <i class="fa-solid fa-wallet" style="font-size: 3rem; color: var(--vodafone);"></i>
+                <h3>فودافون كاش</h3>
+                <p>يرجى تحويل مبلغ الاشتراك على أحد الأرقام التالية، ثم إرسال سكرين شوت للتحويل عبر واتساب لتفعيل البوت فوراً.</p>
+                <div class="payment-numbers">
+                    01091055825 <br> 01062091175
+                </div>
+            </div>
+            
+            <div class="payment-card binance">
+                <i class="fa-brands fa-btc" style="font-size: 3rem; color: var(--binance);"></i>
+                <h3>Binance (USDT)</h3>
+                <p>متاح الدفع عن طريق منصة بينانس للعملاء من خارج مصر أو مفضلي العملات الرقمية. تواصل معنا على ديسكورد أو واتساب للحصول على عنوان المحفظة (Pay ID).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">تواصل معنا</h2>
+        <div class="social-container">
+            <a href="https://wa.me/201091055825" target="_blank" class="social-box wa">
+                <i class="fa-brands fa-whatsapp"></i>
+                واتساب
+            </a>
+            <a href="https://www.facebook.com/bfabots" target="_blank" class="social-box fb">
+                <i class="fa-brands fa-facebook-f"></i>
+                فيسبوك
+            </a>
+            <a href="https://discord.gg/qBDhNqDCnA" target="_blank" class="social-box" style="border-color: #222;">
+                <i class="fa-brands fa-discord" style="color: var(--discord);"></i>
+                ديسكورد
+            </a>
+            <a href="https://www.youtube.com/@BFA1411" target="_blank" class="social-box" style="border-color: #222;">
+                <i class="fa-brands fa-youtube" style="color: var(--youtube);"></i>
+                يوتيوب
+            </a>
         </div>
     </section>
 
