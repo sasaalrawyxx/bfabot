@@ -46,7 +46,7 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 90px; /* لتوسيع مكان للشريط السفلي */
+            padding-bottom: 90px;
         }
         
         body::after {
@@ -125,7 +125,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* الزر الجانبي لتشغيل الراديو السريع */
         .apib-btn {
             background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--neon-blue);
@@ -157,7 +156,6 @@
         .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
         @keyframes line-scale { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
 
-        /* منطقة معلومات السورة وأزرار التحكم */
         .player-controls {
             display: flex;
             align-items: center;
@@ -213,7 +211,7 @@
 </head>
 <body>
 
-    <audio id="bg-audio"></audio>
+    <audio id="bg-audio" autoplay></audio>
 
     <nav>
         <a href="#" class="logo-container">
@@ -351,7 +349,6 @@
         
         let isPlaying = false;
 
-        // قائمة السور باستخدام سيرفر ourquraan السريع كما هو في كود الموقع
         const playlist = [
             { name: "سورة الفاتحة", src: "https://listen.ourquraan.com/Mohammad_Ayyub/001.mp3" },
             { name: "سورة البقرة", src: "https://listen.ourquraan.com/Mohammad_Ayyub/002.mp3" },
@@ -377,9 +374,11 @@
             trackNameDisplay.innerText = playlist[currentTrackIndex].name;
         }
 
-        function loadAndPlayTrack(index) {
-            currentTrackIndex = index;
-            audio.src = playlist[currentTrackIndex].src;
+        // دالة هجومية لمحاولة التشغيل
+        function forcePlay() {
+            if (!audio.src || audio.src === window.location.href) {
+                audio.src = playlist[currentTrackIndex].src;
+            }
             
             let playPromise = audio.play();
             if (playPromise !== undefined) {
@@ -387,45 +386,53 @@
                     isPlaying = true;
                     updateUI(true);
                 }).catch(error => {
-                    console.log("المتصفح يمنع التشغيل التلقائي.");
+                    console.log("المتصفح صد محاولة التشغيل التلقائي بسبب سياسات الأمان.");
                     isPlaying = false;
                     updateUI(false);
                 });
             }
         }
 
-        // تشغيل السورة التالية عند الانتهاء
+        // محاولة التشغيل فوراً بمجرد تحميل هيكل الصفحة
+        window.addEventListener('DOMContentLoaded', forcePlay);
+        
+        // محاولة أخرى بمجرد اكتمال تحميل الصور والخطوط
+        window.addEventListener('load', forcePlay);
+
+        // الخطة البديلة: التشغيل مع أول كليك في أي مكان بالشاشة (لتخطي حظر المتصفح)
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                forcePlay();
+            }
+        });
+
         audio.addEventListener('ended', function() {
             currentTrackIndex++;
             if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
-            loadAndPlayTrack(currentTrackIndex);
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
         });
 
-        // أزرار السورة التالية والسابقة
         nextBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             currentTrackIndex++;
             if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
-            loadAndPlayTrack(currentTrackIndex);
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
         });
 
         prevBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             currentTrackIndex--;
             if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
-            loadAndPlayTrack(currentTrackIndex);
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
         });
 
-        // زر التشغيل والإيقاف الرئيسي
         function togglePlayPause(e) {
             e.stopPropagation();
             if (audio.paused) {
-                if (!audio.src || audio.src === window.location.href) {
-                    audio.src = playlist[currentTrackIndex].src;
-                }
-                audio.play();
-                isPlaying = true;
-                updateUI(true);
+                forcePlay();
             } else {
                 audio.pause();
                 isPlaying = false;
@@ -435,18 +442,6 @@
 
         mainPlayBtn.addEventListener('click', togglePlayPause);
         sideRadioBtn.addEventListener('click', togglePlayPause);
-
-        // التشغيل مع أول كليك في الموقع (تجاوز حماية المتصفح)
-        document.body.addEventListener('click', function() {
-            if (!isPlaying && (!audio.src || audio.src === window.location.href)) {
-                loadAndPlayTrack(0);
-            }
-        }, { once: true });
-
-        // محاولة التشغيل فور تحميل الصفحة
-        window.addEventListener('load', function() {
-            loadAndPlayTrack(0);
-        });
 
     </script>
 
