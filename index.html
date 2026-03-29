@@ -32,7 +32,7 @@
             cursor: url('cursor.cur'), auto !important;
         }
 
-        a, button, .social-box, .apib-btn {
+        a, button, .social-box, .apib-btn, .ctrl-btn {
             cursor: url('cursor.cur'), pointer !important;
         }
 
@@ -46,6 +46,7 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 90px; /* لتوسيع مكان للشريط السفلي */
         }
         
         body::after {
@@ -105,114 +106,114 @@
         .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.25); }
         .social-box.wa:hover i { color: var(--whatsapp); }
 
-        footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-top: 50px; z-index: 10; position: relative; }
+        footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-bottom: 60px; z-index: 10; position: relative; }
 
-        /* ================= ستايل زر الراديو ================= */
-        .apib-btn {
+        /* ================= شريط المشغل السفلي ================= */
+        .audio-player-bar {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             background-color: rgba(15, 15, 19, 0.95);
-            border: 1px solid var(--neon-blue);
-            border-radius: 30px;
-            padding: 10px 20px;
+            border-top: 1px solid var(--neon-blue);
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: space-between;
+            padding: 10px 40px;
             z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-            transition: all 0.3s;
-            user-select: none;
+            box-shadow: 0 -5px 20px rgba(0, 210, 255, 0.15);
             backdrop-filter: blur(10px);
         }
 
-        .apib-btn:hover {
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
-        }
-
-        .apib-btn svg {
-            fill: var(--neon-blue);
-        }
-
-        .apib-play, .apib-pause {
+        /* الزر الجانبي لتشغيل الراديو السريع */
+        .apib-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            border-radius: 30px;
+            padding: 8px 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            color: var(--text-light);
+            gap: 15px;
+            transition: all 0.3s;
+            user-select: none;
         }
 
-        /* إخفاء وإظهار الأزرار بناءً على حالة التشغيل */
+        .apib-btn:hover { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+        .apib-btn svg { fill: var(--neon-blue); }
+        .apib-play, .apib-pause { display: flex; align-items: center; gap: 10px; font-weight: bold; color: var(--text-light); }
+        
         .apib-btn.playing .apib-play { display: none; }
         .apib-btn.playing .apib-pause { display: flex; }
         .apib-btn:not(.playing) .apib-play { display: flex; }
         .apib-btn:not(.playing) .apib-pause { display: none; }
 
-        /* أنيميشن الموجات الصوتية */
-        .apib-loading {
-            display: flex;
-            gap: 3px;
-            align-items: flex-end;
-            height: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-
-        .apib-btn.playing .apib-loading {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .apib-loading div {
-            width: 3px;
-            background-color: var(--neon-blue);
-            border-radius: 2px;
-            animation: line-scale 1s infinite ease-in-out;
-        }
-
+        .apib-loading { display: flex; gap: 3px; align-items: flex-end; height: 18px; opacity: 0; transition: 0.3s; }
+        .apib-btn.playing .apib-loading { opacity: 1; }
+        .apib-loading div { width: 3px; background-color: var(--neon-blue); border-radius: 2px; animation: line-scale 1s infinite ease-in-out; }
         .apib-loading div:nth-child(1) { animation-delay: -0.4s; }
         .apib-loading div:nth-child(2) { animation-delay: -0.2s; }
         .apib-loading div:nth-child(3) { animation-delay: 0s; }
         .apib-loading div:nth-child(4) { animation-delay: -0.2s; }
         .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
+        @keyframes line-scale { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
 
-        @keyframes line-scale {
-            0%, 100% { transform: scaleY(0.4); }
-            50% { transform: scaleY(1); }
+        /* منطقة معلومات السورة وأزرار التحكم */
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
+
+        .track-info {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+        }
+        .track-name { font-weight: bold; font-size: 1.1rem; color: var(--neon-blue); }
+        .track-reciter { font-size: 0.9rem; color: var(--text-gray); }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ctrl-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ctrl-btn:hover { color: var(--neon-blue); transform: scale(1.1); }
+        
+        .play-pause-btn {
+            width: 45px;
+            height: 45px;
+            background-color: var(--neon-blue);
+            color: #000;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+        }
+        .play-pause-btn:hover { background-color: var(--text-light); color: var(--neon-blue); box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
 
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
             .hero h1 { font-size: 2.8rem; }
-            .apib-btn { bottom: 15px; left: 15px; padding: 8px 15px; font-size: 0.9rem; }
-            .apib-btn svg { height: 18px; width: 18px; }
+            .audio-player-bar { flex-direction: column; padding: 10px; gap: 10px; height: auto; }
+            .apib-btn { padding: 5px 15px; font-size: 0.9rem; }
+            .player-controls { width: 100%; justify-content: space-between; }
         }
     </style>
 </head>
 <body>
 
     <audio id="bg-audio"></audio>
-
-    <div id="radio-btn" class="apib-btn">
-        <div class="la-line-scale apib-loading la-sm text-white">
-            <div></div><div></div><div></div><div></div><div></div>
-        </div>
-        
-        <div class="apib-pause">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
-                <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"></path>
-            </svg>
-            تلاوة محمد أيوب (إيقاف)
-        </div>
-        
-        <div class="apib-play">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
-                <path d="M160-80q-33 0-56.5-23.5T80-160v-480q0-25 13.5-45t36.5-29l473-193q14-5 27.5.5T649-887q5 14-.5 27.5T629-841L332-720h468q33 0 56.5 23.5T880-640v480q0 33-23.5 56.5T800-80H160Zm0-80h640v-280H160v280Zm160-40q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29ZM160-520h480v-40q0-17 11.5-28.5T680-600q17 0 28.5 11.5T720-560v40h80v-120H160v120Zm0 360v-280 280Z"></path>
-            </svg>
-            استمع لمحمد أيوب
-        </div>
-    </div>
 
     <nav>
         <a href="#" class="logo-container">
@@ -302,70 +303,151 @@
         <p>جميع الحقوق محفوظة &copy; 2026 - BFA BOT</p>
     </footer>
 
+    <div class="audio-player-bar">
+        <div id="side-radio-btn" class="apib-btn">
+            <div class="la-line-scale apib-loading la-sm">
+                <div></div><div></div><div></div><div></div><div></div>
+            </div>
+            <div class="apib-pause">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"><path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/></svg>
+                القارئ محمد أيوب
+            </div>
+            <div class="apib-play">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"><path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/></svg>
+                القارئ محمد أيوب
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <div class="track-info">
+                <div class="track-name" id="track-name">سورة الفاتحة</div>
+                <div class="track-reciter">تلاوة: محمد أيوب</div>
+            </div>
+            
+            <div class="control-buttons">
+                <button class="ctrl-btn" id="prev-btn" title="السورة السابقة">
+                    <i class="fa-solid fa-backward-step"></i>
+                </button>
+                
+                <button class="ctrl-btn play-pause-btn" id="main-play-btn" title="تشغيل / إيقاف">
+                    <i class="fa-solid fa-play" id="main-icon"></i>
+                </button>
+
+                <button class="ctrl-btn" id="next-btn" title="السورة التالية">
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const audio = document.getElementById('bg-audio');
-        const radioBtn = document.getElementById('radio-btn');
+        const sideRadioBtn = document.getElementById('side-radio-btn');
+        const mainPlayBtn = document.getElementById('main-play-btn');
+        const mainIcon = document.getElementById('main-icon');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const trackNameDisplay = document.getElementById('track-name');
+        
         let isPlaying = false;
 
-        // سحبنا الروابط المباشرة للشيخ محمد أيوب من الموقع اللي إنت طلبته
+        // قائمة السور باستخدام سيرفر ourquraan السريع كما هو في كود الموقع
         const playlist = [
-            "https://server8.mp3quran.net/ayyub/001.mp3", // الفاتحة
-            "https://server8.mp3quran.net/ayyub/036.mp3", // يس
-            "https://server8.mp3quran.net/ayyub/055.mp3", // الرحمن
-            "https://server8.mp3quran.net/ayyub/056.mp3", // الواقعة
-            "https://server8.mp3quran.net/ayyub/067.mp3"  // الملك
+            { name: "سورة الفاتحة", src: "https://listen.ourquraan.com/Mohammad_Ayyub/001.mp3" },
+            { name: "سورة البقرة", src: "https://listen.ourquraan.com/Mohammad_Ayyub/002.mp3" },
+            { name: "سورة آل عمران", src: "https://listen.ourquraan.com/Mohammad_Ayyub/003.mp3" },
+            { name: "سورة النساء", src: "https://listen.ourquraan.com/Mohammad_Ayyub/004.mp3" },
+            { name: "سورة المائدة", src: "https://listen.ourquraan.com/Mohammad_Ayyub/005.mp3" },
+            { name: "سورة الأنعام", src: "https://listen.ourquraan.com/Mohammad_Ayyub/006.mp3" },
+            { name: "سورة الأعراف", src: "https://listen.ourquraan.com/Mohammad_Ayyub/007.mp3" }
         ];
 
-        let currentTrack = 0;
+        let currentTrackIndex = 0;
 
-        function loadAndPlay() {
-            audio.src = playlist[currentTrack];
+        function updateUI(playing) {
+            if (playing) {
+                sideRadioBtn.classList.add('playing');
+                mainIcon.classList.remove('fa-play');
+                mainIcon.classList.add('fa-pause');
+            } else {
+                sideRadioBtn.classList.remove('playing');
+                mainIcon.classList.remove('fa-pause');
+                mainIcon.classList.add('fa-play');
+            }
+            trackNameDisplay.innerText = playlist[currentTrackIndex].name;
+        }
+
+        function loadAndPlayTrack(index) {
+            currentTrackIndex = index;
+            audio.src = playlist[currentTrackIndex].src;
+            
             let playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     isPlaying = true;
-                    radioBtn.classList.add('playing');
+                    updateUI(true);
                 }).catch(error => {
-                    console.log("المتصفح يمنع التشغيل التلقائي. يجب أن يتفاعل المستخدم أولاً.");
+                    console.log("المتصفح يمنع التشغيل التلقائي.");
+                    isPlaying = false;
+                    updateUI(false);
                 });
             }
         }
 
-        // تشغيل السورة التالية تلقائياً لما السورة الحالية تخلص
+        // تشغيل السورة التالية عند الانتهاء
         audio.addEventListener('ended', function() {
-            currentTrack++;
-            if (currentTrack >= playlist.length) {
-                currentTrack = 0; // يرجع لأول سورة لو الليستة خلصت
-            }
-            loadAndPlay();
+            currentTrackIndex++;
+            if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+            loadAndPlayTrack(currentTrackIndex);
         });
 
-        // محاولة التشغيل فور تحميل الصفحة
-        window.addEventListener('load', loadAndPlay);
+        // أزرار السورة التالية والسابقة
+        nextBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentTrackIndex++;
+            if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+            loadAndPlayTrack(currentTrackIndex);
+        });
 
-        // إذا المتصفح منع التشغيل، يتم تشغيله بمجرد أول ضغطة للزائر في أي مكان
-        document.body.addEventListener('click', function() {
-            if (!isPlaying) {
-                loadAndPlay();
-            }
-        }, { once: true });
+        prevBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentTrackIndex--;
+            if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
+            loadAndPlayTrack(currentTrackIndex);
+        });
 
-        // التحكم اليدوي من الزرار
-        radioBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // لمنع التعارض
+        // زر التشغيل والإيقاف الرئيسي
+        function togglePlayPause(e) {
+            e.stopPropagation();
             if (audio.paused) {
                 if (!audio.src || audio.src === window.location.href) {
-                    audio.src = playlist[currentTrack];
+                    audio.src = playlist[currentTrackIndex].src;
                 }
                 audio.play();
                 isPlaying = true;
-                radioBtn.classList.add('playing');
+                updateUI(true);
             } else {
                 audio.pause();
                 isPlaying = false;
-                radioBtn.classList.remove('playing');
+                updateUI(false);
             }
+        }
+
+        mainPlayBtn.addEventListener('click', togglePlayPause);
+        sideRadioBtn.addEventListener('click', togglePlayPause);
+
+        // التشغيل مع أول كليك في الموقع (تجاوز حماية المتصفح)
+        document.body.addEventListener('click', function() {
+            if (!isPlaying && (!audio.src || audio.src === window.location.href)) {
+                loadAndPlayTrack(0);
+            }
+        }, { once: true });
+
+        // محاولة التشغيل فور تحميل الصفحة
+        window.addEventListener('load', function() {
+            loadAndPlayTrack(0);
         });
+
     </script>
 
 </body>
