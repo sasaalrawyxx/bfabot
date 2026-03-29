@@ -130,7 +130,7 @@
 </head>
 <body>
 
-    <audio id="bg-audio">
+    <audio id="bg-audio" autoplay>
         متصفحك لا يدعم تشغيل الصوت.
     </audio>
 
@@ -231,51 +231,65 @@
         const audioBtn = document.getElementById('audio-control');
         const audioIcon = document.getElementById('audio-icon');
 
-        // ====== هنا تقدر تحط أي روابط MP3 إنت عايزها ======
         const playlist = [
-            "https://server8.mp3quran.net/afs/001.mp3", // سورة الفاتحة
-            "https://server8.mp3quran.net/afs/036.mp3", // سورة يس
-            "https://server8.mp3quran.net/afs/055.mp3", // سورة الرحمن
-            "https://server8.mp3quran.net/afs/056.mp3"  // سورة الواقعة
+            "https://server8.mp3quran.net/afs/001.mp3", 
+            "https://server8.mp3quran.net/afs/036.mp3", 
+            "https://server8.mp3quran.net/afs/055.mp3", 
+            "https://server8.mp3quran.net/afs/056.mp3"  
         ];
 
         let currentTrack = 0;
         let isPlaying = false;
 
-        // دالة لسحب المقطع الحالي وتشغيله
         function loadAndPlay() {
             audio.src = playlist[currentTrack];
-            audio.play().then(() => {
-                isPlaying = true;
-                audioIcon.classList.remove('fa-volume-xmark');
-                audioIcon.classList.add('fa-volume-high');
-            }).catch(error => {
-                console.log("التبويب يحتاج إلى تفاعل المستخدم أولاً");
-            });
+            // محاولة التشغيل التلقائي
+            let playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
+                    audioIcon.classList.remove('fa-volume-xmark');
+                    audioIcon.classList.add('fa-volume-high');
+                }).catch(error => {
+                    // إذا منع المتصفح التشغيل التلقائي، سيتم الانتظار لضغطة المستخدم
+                    console.log("المتصفح يمنع التشغيل التلقائي. في انتظار تفاعل المستخدم.");
+                    isPlaying = false;
+                });
+            }
         }
 
-        // لما المقطع يخلص، شغل اللي بعده تلقائي
+        // محاولة التشغيل فور تحميل الصفحة
+        window.addEventListener('load', function() {
+            loadAndPlay();
+        });
+
         audio.addEventListener('ended', function() {
             currentTrack++;
-            // لو الليستة خلصت، ارجع لأول سورة
             if (currentTrack >= playlist.length) {
                 currentTrack = 0;
             }
             loadAndPlay();
         });
 
-        // تشغيل الصوت من أول ضغطة في أي مكان بالموقع
+        // تشغيل احتياطي إذا تم منع التشغيل التلقائي (يعمل مع أي ضغطة)
         document.body.addEventListener('click', function() {
             if (!isPlaying) {
-                loadAndPlay();
+                // التأكد من وجود مسار للصوت قبل التشغيل
+                if (!audio.src || audio.src === window.location.href) {
+                     audio.src = playlist[currentTrack];
+                }
+                audio.play().then(() => {
+                    isPlaying = true;
+                    audioIcon.classList.remove('fa-volume-xmark');
+                    audioIcon.classList.add('fa-volume-high');
+                });
             }
-        }, { once: true });
+        });
 
-        // التحكم في زر الصوت (تشغيل/إيقاف)
         audioBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // عشان الزرار ميتعارضش مع ضغطة الشاشة
-            if (!audio.src) {
-                // لو لسه مفيش حاجة اشتغلت خالص
+            event.stopPropagation(); 
+            if (!audio.src || audio.src === window.location.href) {
                 loadAndPlay();
             } else if (audio.paused) {
                 audio.play();
