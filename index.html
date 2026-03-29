@@ -29,11 +29,10 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* تم تعديل الكود ليقرأ ملف الماوس بصيغة cur */
+            /* الماوس المخصص */
             cursor: url('cursor.cur'), auto !important;
         }
 
-        /* لضمان تغير الماوس حتى عند المرور على الروابط والأزرار */
         a, button, .social-box {
             cursor: url('cursor.cur'), pointer !important;
         }
@@ -53,25 +52,16 @@
         body::after {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 50px;
-            background-color: rgba(3, 3, 3, 0.95);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 50px; background-color: rgba(3, 3, 3, 0.95);
             border-bottom: 1px solid rgba(0, 210, 255, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
         }
 
         .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
@@ -120,28 +110,15 @@
 
         /* ستايل زر تشغيل/إيقاف الصوت */
         .audio-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(15, 15, 19, 0.9);
-            border: 2px solid var(--neon-blue);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--neon-blue);
-            font-size: 1.5rem;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
-            transition: all 0.3s;
+            position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px;
+            background-color: rgba(15, 15, 19, 0.9); border: 2px solid var(--neon-blue);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            color: var(--neon-blue); font-size: 1.5rem; z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); transition: all 0.3s;
         }
         .audio-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
-            background-color: var(--neon-blue);
-            color: #000;
+            transform: scale(1.1); box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+            background-color: var(--neon-blue); color: #000;
         }
 
         @media (max-width: 768px) {
@@ -153,8 +130,7 @@
 </head>
 <body>
 
-    <audio id="bg-audio" loop>
-        <source src="quran.mp3" type="audio/mpeg">
+    <audio id="bg-audio">
         متصفحك لا يدعم تشغيل الصوت.
     </audio>
 
@@ -255,24 +231,60 @@
         const audioBtn = document.getElementById('audio-control');
         const audioIcon = document.getElementById('audio-icon');
 
-        // تشغيل الصوت من أول ضغطة في أي مكان بالموقع
-        document.body.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play();
+        // ====== هنا تقدر تحط أي روابط MP3 إنت عايزها ======
+        const playlist = [
+            "https://server8.mp3quran.net/afs/001.mp3", // سورة الفاتحة
+            "https://server8.mp3quran.net/afs/036.mp3", // سورة يس
+            "https://server8.mp3quran.net/afs/055.mp3", // سورة الرحمن
+            "https://server8.mp3quran.net/afs/056.mp3"  // سورة الواقعة
+        ];
+
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        // دالة لسحب المقطع الحالي وتشغيله
+        function loadAndPlay() {
+            audio.src = playlist[currentTrack];
+            audio.play().then(() => {
+                isPlaying = true;
                 audioIcon.classList.remove('fa-volume-xmark');
                 audioIcon.classList.add('fa-volume-high');
+            }).catch(error => {
+                console.log("التبويب يحتاج إلى تفاعل المستخدم أولاً");
+            });
+        }
+
+        // لما المقطع يخلص، شغل اللي بعده تلقائي
+        audio.addEventListener('ended', function() {
+            currentTrack++;
+            // لو الليستة خلصت، ارجع لأول سورة
+            if (currentTrack >= playlist.length) {
+                currentTrack = 0;
+            }
+            loadAndPlay();
+        });
+
+        // تشغيل الصوت من أول ضغطة في أي مكان بالموقع
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                loadAndPlay();
             }
         }, { once: true });
 
         // التحكم في زر الصوت (تشغيل/إيقاف)
         audioBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // منع تعارض الضغطة مع كود الـ body
-            if (audio.paused) {
+            event.stopPropagation(); // عشان الزرار ميتعارضش مع ضغطة الشاشة
+            if (!audio.src) {
+                // لو لسه مفيش حاجة اشتغلت خالص
+                loadAndPlay();
+            } else if (audio.paused) {
                 audio.play();
+                isPlaying = true;
                 audioIcon.classList.remove('fa-volume-xmark');
                 audioIcon.classList.add('fa-volume-high');
             } else {
                 audio.pause();
+                isPlaying = false;
                 audioIcon.classList.remove('fa-volume-high');
                 audioIcon.classList.add('fa-volume-xmark');
             }
