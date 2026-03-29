@@ -29,11 +29,10 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* الماوس المخصص */
             cursor: url('cursor.cur'), auto !important;
         }
 
-        a, button, .social-box {
+        a, button, .social-box, .apib-btn {
             cursor: url('cursor.cur'), pointer !important;
         }
 
@@ -108,35 +107,114 @@
 
         footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-top: 50px; z-index: 10; position: relative; }
 
-        /* ستايل زر تشغيل/إيقاف الصوت */
-        .audio-btn {
-            position: fixed; bottom: 30px; left: 30px; width: 50px; height: 50px;
-            background-color: rgba(15, 15, 19, 0.9); border: 2px solid var(--neon-blue);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            color: var(--neon-blue); font-size: 1.5rem; z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); transition: all 0.3s;
+        /* ================= ستايل الراديو الجديد ================= */
+        .apib-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: rgba(15, 15, 19, 0.9);
+            border: 1px solid var(--neon-blue);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            transition: all 0.3s;
+            user-select: none;
         }
-        .audio-btn:hover {
-            transform: scale(1.1); box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
-            background-color: var(--neon-blue); color: #000;
+
+        .apib-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
+        }
+
+        .apib-btn svg {
+            fill: var(--neon-blue);
+        }
+
+        .apib-play, .apib-pause {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        /* التحكم في إظهار زر التشغيل أو الإيقاف */
+        .apib-btn.playing .apib-play { display: none; }
+        .apib-btn.playing .apib-pause { display: flex; }
+        .apib-btn:not(.playing) .apib-play { display: flex; }
+        .apib-btn:not(.playing) .apib-pause { display: none; }
+
+        /* أنيميشن الصوت (الأعمدة) */
+        .apib-loading {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 20px;
+            opacity: 0; /* مخفي افتراضياً */
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .apib-btn.playing .apib-loading {
+            opacity: 1; /* يظهر فقط أثناء التشغيل */
+            visibility: visible;
+        }
+
+        .apib-loading div {
+            width: 3px;
+            background-color: var(--neon-blue);
+            border-radius: 2px;
+            animation: line-scale 1s infinite ease-in-out;
+        }
+
+        .apib-loading div:nth-child(1) { animation-delay: -0.4s; }
+        .apib-loading div:nth-child(2) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(3) { animation-delay: 0s; }
+        .apib-loading div:nth-child(4) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
+
+        @keyframes line-scale {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
         }
 
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
             .hero h1 { font-size: 2.8rem; }
-            .audio-btn { bottom: 15px; left: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
+            .apib-btn { bottom: 15px; left: 15px; padding: 8px 15px; font-size: 0.9rem; }
+            .apib-btn svg { height: 18px; width: 18px; }
         }
     </style>
 </head>
 <body>
 
     <audio id="bg-audio" autoplay>
+        <source src="https://qurango.net/radio/tarteel" type="audio/mpeg">
         متصفحك لا يدعم تشغيل الصوت.
     </audio>
 
-    <button id="audio-control" class="audio-btn" title="تشغيل/إيقاف الصوت">
-        <i id="audio-icon" class="fa-solid fa-volume-xmark"></i>
-    </button>
+    <div id="radio-btn" class="apib-btn">
+        <div class="la-line-scale apib-loading la-sm">
+            <div></div><div></div><div></div><div></div><div></div>
+        </div>
+        
+        <div class="apib-pause">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"></path>
+            </svg> 
+            إيقاف الراديو
+        </div>
+        
+        <div class="apib-play">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                <path d="M160-80q-33 0-56.5-23.5T80-160v-480q0-25 13.5-45t36.5-29l473-193q14-5 27.5.5T649-887q5 14-.5 27.5T629-841L332-720h468q33 0 56.5 23.5T880-640v480q0 33-23.5 56.5T800-80H160Zm0-80h640v-280H160v280Zm160-40q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29ZM160-520h480v-40q0-17 11.5-28.5T680-600q17 0 28.5 11.5T720-560v40h80v-120H160v120Zm0 360v-280 280Z"></path>
+            </svg> 
+            استمع إلى الراديو
+        </div>
+    </div>
 
     <nav>
         <a href="#" class="logo-container">
@@ -228,79 +306,45 @@
 
     <script>
         const audio = document.getElementById('bg-audio');
-        const audioBtn = document.getElementById('audio-control');
-        const audioIcon = document.getElementById('audio-icon');
-
-        const playlist = [
-            "https://server8.mp3quran.net/afs/001.mp3", 
-            "https://server8.mp3quran.net/afs/036.mp3", 
-            "https://server8.mp3quran.net/afs/055.mp3", 
-            "https://server8.mp3quran.net/afs/056.mp3"  
-        ];
-
-        let currentTrack = 0;
+        const radioBtn = document.getElementById('radio-btn');
         let isPlaying = false;
-
-        function loadAndPlay() {
-            audio.src = playlist[currentTrack];
-            // محاولة التشغيل التلقائي
-            let playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isPlaying = true;
-                    audioIcon.classList.remove('fa-volume-xmark');
-                    audioIcon.classList.add('fa-volume-high');
-                }).catch(error => {
-                    // إذا منع المتصفح التشغيل التلقائي، سيتم الانتظار لضغطة المستخدم
-                    console.log("المتصفح يمنع التشغيل التلقائي. في انتظار تفاعل المستخدم.");
-                    isPlaying = false;
-                });
-            }
-        }
 
         // محاولة التشغيل فور تحميل الصفحة
         window.addEventListener('load', function() {
-            loadAndPlay();
-        });
-
-        audio.addEventListener('ended', function() {
-            currentTrack++;
-            if (currentTrack >= playlist.length) {
-                currentTrack = 0;
-            }
-            loadAndPlay();
-        });
-
-        // تشغيل احتياطي إذا تم منع التشغيل التلقائي (يعمل مع أي ضغطة)
-        document.body.addEventListener('click', function() {
-            if (!isPlaying) {
-                // التأكد من وجود مسار للصوت قبل التشغيل
-                if (!audio.src || audio.src === window.location.href) {
-                     audio.src = playlist[currentTrack];
-                }
-                audio.play().then(() => {
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // التشغيل التلقائي نجح
                     isPlaying = true;
-                    audioIcon.classList.remove('fa-volume-xmark');
-                    audioIcon.classList.add('fa-volume-high');
+                    radioBtn.classList.add('playing');
+                }).catch(error => {
+                    // المتصفح منع التشغيل، ننتظر ضغطة المستخدم
+                    console.log("تم منع التشغيل التلقائي، في انتظار تفاعل المستخدم.");
                 });
             }
         });
 
-        audioBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); 
-            if (!audio.src || audio.src === window.location.href) {
-                loadAndPlay();
-            } else if (audio.paused) {
+        // تشغيل احتياطي إذا تم منع التشغيل التلقائي (يعمل مع أول ضغطة في أي مكان)
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    radioBtn.classList.add('playing');
+                });
+            }
+        }, { once: true });
+
+        // التحكم اليدوي من الزرار (إيقاف/تشغيل)
+        radioBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // منع التعارض مع ضغطة الشاشة
+            if (audio.paused) {
                 audio.play();
                 isPlaying = true;
-                audioIcon.classList.remove('fa-volume-xmark');
-                audioIcon.classList.add('fa-volume-high');
+                radioBtn.classList.add('playing');
             } else {
                 audio.pause();
                 isPlaying = false;
-                audioIcon.classList.remove('fa-volume-high');
-                audioIcon.classList.add('fa-volume-xmark');
+                radioBtn.classList.remove('playing');
             }
         });
     </script>
