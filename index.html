@@ -29,10 +29,16 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            /* تم تعديل الكود ليقرأ ملف الماوس بصيغة cur */
+            cursor: url('cursor.cur'), auto !important;
+        }
+
+        /* لضمان تغير الماوس حتى عند المرور على الروابط والأزرار */
+        a, button, .social-box {
+            cursor: url('cursor.cur'), pointer !important;
         }
 
         body {
-            /* تم تعديل الخلفية لتكون الصورة الجديدة */
             background-image: url('image_7.png');
             background-size: cover;
             background-position: center center;
@@ -43,10 +49,7 @@
             overflow-x: hidden;
             position: relative;
         }
-
-        /* تم إزالة الشبكة النيونية القديمة (::before) لمنع التداخل مع الصورة الجديدة */
         
-        /* أضفنا طبقة تعتيم خفيفة فوق الصورة لضمان وضوح النص */
         body::after {
             content: "";
             position: fixed;
@@ -54,11 +57,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* طبقة تعتيم بنسبة 60% */
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
-        /* شريط التنقل - تم تعتيم الخلفية لزيادة الوضوح */
         nav {
             display: flex;
             justify-content: space-between;
@@ -72,237 +74,93 @@
             backdrop-filter: blur(10px);
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--neon-blue); box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
+        .logo-text { font-size: 26px; font-weight: 900; color: var(--text-light); letter-spacing: 1px; }
+        .logo-text span { color: var(--neon-blue); }
+        .nav-links a { color: var(--text-light); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--neon-blue); }
 
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
-        }
+        .hero { text-align: center; padding: 120px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0, 210, 255, 0.3); }
+        .hero h1 span { color: var(--neon-blue); }
+        .hero p { font-size: 1.3rem; color: var(--text-gray); max-width: 700px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 10px; }
 
-        .logo-text {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--text-light);
-            letter-spacing: 1px;
-        }
-
-        .logo-text span {
-            color: var(--neon-blue);
-        }
-
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--neon-blue);
-        }
-
-        /* القسم الرئيسي */
-        .hero {
-            text-align: center;
-            padding: 120px 20px 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
-        }
-
-        .hero h1 span {
-            color: var(--neon-blue);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: var(--text-gray);
-            max-width: 700px;
-            margin-bottom: 30px;
-            /* تم إضافة خلفية تعتيم للنص */
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 10px;
-        }
-
-        /* الأزرار */
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-discord {
-            background-color: var(--discord);
-            color: white;
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
-        }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 12px 30px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s; border: none; }
+        .btn-discord { background-color: var(--discord); color: white; box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
         .btn-discord:hover { background-color: #4752c4; transform: translateY(-3px); }
-
-        .btn-youtube {
-            background-color: transparent;
-            color: var(--text-light);
-            border: 1px solid var(--youtube);
-            /* تعتيم الخلفية لزر يوتيوب */
-            background-color: rgba(0, 0, 0, 0.3);
-        }
+        .btn-youtube { background-color: rgba(0, 0, 0, 0.3); color: var(--text-light); border: 1px solid var(--youtube); }
         .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.15); border-color: #ff3333; transform: translateY(-3px); }
 
-        /* الأقسام المشتركة */
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            color: var(--neon-blue);
-            z-index: 10;
-        }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--neon-blue); z-index: 10; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
 
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: rgba(15, 15, 19, 0.85); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; backdrop-filter: blur(5px); }
+        .feature-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15); }
+        .feature-icon { font-size: 40px; color: var(--neon-blue); margin-bottom: 20px; }
 
-        /* المميزات - تم تعتيم الكروت لزيادة الوضوح */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: rgba(15, 15, 19, 0.85); /* كارت شبه شفاف مع خلفية داكنة */
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-            text-align: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .feature-card:hover {
-            border-color: var(--neon-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            color: var(--neon-blue);
-            margin-bottom: 20px;
-        }
-
-        /* طرق الدفع - تم تعتيم الكروت */
-        .payment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .payment-card {
-            background: rgba(10, 10, 10, 0.9); /* كارت أكثر تعتيماً */
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #222;
-            backdrop-filter: blur(5px);
-        }
-
+        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .payment-card { background: rgba(10, 10, 10, 0.9); padding: 40px 30px; border-radius: 20px; text-align: center; position: relative; overflow: hidden; border: 1px solid #222; backdrop-filter: blur(5px); }
         .payment-card.vf::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--vodafone); }
         .payment-card.binance::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--binance); }
-
         .payment-card h3 { font-size: 1.8rem; margin: 15px 0; }
         .payment-numbers { font-size: 1.4rem; font-weight: bold; color: var(--neon-blue); margin: 20px 0; letter-spacing: 2px; }
 
-        /* التواصل - تم تعتيم المربعات */
-        .social-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .social-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 150px;
-            height: 150px;
-            background: rgba(15, 15, 19, 0.85); /* صندوق شبه شفاف مع خلفية داكنة */
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: 0.3s;
-            border: 1px solid #222;
-            backdrop-filter: blur(5px);
-        }
-
+        .social-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .social-box { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; background: rgba(15, 15, 19, 0.85); border-radius: 20px; text-decoration: none; color: var(--text-light); font-size: 1.2rem; font-weight: bold; transition: 0.3s; border: 1px solid #222; backdrop-filter: blur(5px); }
         .social-box i { font-size: 3rem; margin-bottom: 15px; transition: 0.3s; }
-        
         .social-box.fb:hover { border-color: var(--facebook); box-shadow: 0 0 20px rgba(24, 119, 242, 0.25); }
         .social-box.fb:hover i { color: var(--facebook); }
-
         .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.25); }
         .social-box.wa:hover i { color: var(--whatsapp); }
 
-        /* الفوتر */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #000;
-            border-top: 1px solid #111;
-            margin-top: 50px;
-            z-index: 10;
+        footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-top: 50px; z-index: 10; position: relative; }
+
+        /* ستايل زر تشغيل/إيقاف الصوت */
+        .audio-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(15, 15, 19, 0.9);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+            transition: all 0.3s;
+        }
+        .audio-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+            background-color: var(--neon-blue);
+            color: #000;
         }
 
-        /* الموبايل */
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
             .hero h1 { font-size: 2.8rem; }
+            .audio-btn { bottom: 15px; left: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
+
+    <audio id="bg-audio" loop>
+        <source src="quran.mp3" type="audio/mpeg">
+        متصفحك لا يدعم تشغيل الصوت.
+    </audio>
+
+    <button id="audio-control" class="audio-btn" title="تشغيل/إيقاف الصوت">
+        <i id="audio-icon" class="fa-solid fa-volume-xmark"></i>
+    </button>
 
     <nav>
         <a href="#" class="logo-container">
@@ -362,7 +220,6 @@
                     01091055825 <br> 01062091175
                 </div>
             </div>
-            
             <div class="payment-card binance">
                 <i class="fa-brands fa-btc" style="font-size: 3rem; color: var(--binance);"></i>
                 <h3>Binance (USDT)</h3>
@@ -375,20 +232,16 @@
         <h2 class="section-title">تواصل معنا</h2>
         <div class="social-container">
             <a href="https://wa.me/201091055825" target="_blank" class="social-box wa">
-                <i class="fa-brands fa-whatsapp"></i>
-                واتساب
+                <i class="fa-brands fa-whatsapp"></i> واتساب
             </a>
             <a href="https://www.facebook.com/bfabots" target="_blank" class="social-box fb">
-                <i class="fa-brands fa-facebook-f"></i>
-                فيسبوك
+                <i class="fa-brands fa-facebook-f"></i> فيسبوك
             </a>
             <a href="https://discord.gg/qBDhNqDCnA" target="_blank" class="social-box" style="border-color: #222;">
-                <i class="fa-brands fa-discord" style="color: var(--discord);"></i>
-                ديسكورد
+                <i class="fa-brands fa-discord" style="color: var(--discord);"></i> ديسكورد
             </a>
             <a href="https://www.youtube.com/@BFA1411" target="_blank" class="social-box" style="border-color: #222;">
-                <i class="fa-brands fa-youtube" style="color: var(--youtube);"></i>
-                يوتيوب
+                <i class="fa-brands fa-youtube" style="color: var(--youtube);"></i> يوتيوب
             </a>
         </div>
     </section>
@@ -396,6 +249,35 @@
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2026 - BFA BOT</p>
     </footer>
+
+    <script>
+        const audio = document.getElementById('bg-audio');
+        const audioBtn = document.getElementById('audio-control');
+        const audioIcon = document.getElementById('audio-icon');
+
+        // تشغيل الصوت من أول ضغطة في أي مكان بالموقع
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                audioIcon.classList.remove('fa-volume-xmark');
+                audioIcon.classList.add('fa-volume-high');
+            }
+        }, { once: true });
+
+        // التحكم في زر الصوت (تشغيل/إيقاف)
+        audioBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // منع تعارض الضغطة مع كود الـ body
+            if (audio.paused) {
+                audio.play();
+                audioIcon.classList.remove('fa-volume-xmark');
+                audioIcon.classList.add('fa-volume-high');
+            } else {
+                audio.pause();
+                audioIcon.classList.remove('fa-volume-high');
+                audioIcon.classList.add('fa-volume-xmark');
+            }
+        });
+    </script>
 
 </body>
 </html>
