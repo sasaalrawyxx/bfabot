@@ -32,7 +32,7 @@
             cursor: url('cursor.cur'), auto !important;
         }
 
-        a, button, .social-box, .player-btn {
+        a, button, .social-box, .apib-btn {
             cursor: url('cursor.cur'), pointer !important;
         }
 
@@ -46,7 +46,6 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 80px; /* مساحة للشريط السفلي */
         }
         
         body::after {
@@ -71,7 +70,7 @@
         .nav-links a { color: var(--text-light); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
         .nav-links a:hover { color: var(--neon-blue); }
 
-        .hero { text-align: center; padding: 100px 20px 60px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
+        .hero { text-align: center; padding: 120px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
         .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0, 210, 255, 0.3); }
         .hero h1 span { color: var(--neon-blue); }
         .hero p { font-size: 1.3rem; color: var(--text-gray); max-width: 700px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 10px; }
@@ -84,7 +83,7 @@
         .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.15); border-color: #ff3333; transform: translateY(-3px); }
 
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--neon-blue); z-index: 10; }
-        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
 
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .feature-card { background: rgba(15, 15, 19, 0.85); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; backdrop-filter: blur(5px); }
@@ -106,133 +105,117 @@
         .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.25); }
         .social-box.wa:hover i { color: var(--whatsapp); }
 
-        footer { text-align: center; padding: 20px; background: #000; border-top: 1px solid #111; margin-bottom: 60px; z-index: 10; position: relative; }
+        footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-top: 50px; z-index: 10; position: relative; }
 
-        /* ================= شريط المشغل الاحترافي ================= */
-        .bottom-player {
+        /* ================= ستايل زر الراديو ================= */
+        .apib-btn {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(10, 10, 12, 0.95);
-            border-top: 1px solid var(--neon-blue);
-            box-shadow: 0 -5px 20px rgba(0, 210, 255, 0.15);
+            bottom: 30px;
+            left: 30px;
+            background-color: rgba(15, 15, 19, 0.95);
+            border: 1px solid var(--neon-blue);
+            border-radius: 30px;
+            padding: 10px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px 40px;
+            gap: 15px;
             z-index: 1000;
-            backdrop-filter: blur(15px);
-        }
-
-        .player-info-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .player-btn {
-            background: transparent;
-            border: none;
-            outline: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: rgba(0, 210, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
             transition: all 0.3s;
+            user-select: none;
+            backdrop-filter: blur(10px);
         }
 
-        .player-btn:hover {
-            background-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+        .apib-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
         }
 
-        .player-btn svg {
+        .apib-btn svg {
             fill: var(--neon-blue);
-            width: 24px;
-            height: 24px;
-            transition: 0.3s;
         }
 
-        .player-btn:hover svg {
-            fill: #000;
-        }
-
-        .station-details {
+        .apib-play, .apib-pause {
             display: flex;
-            flex-direction: column;
-        }
-
-        .station-name {
-            font-size: 1.1rem;
+            align-items: center;
+            gap: 10px;
             font-weight: bold;
             color: var(--text-light);
         }
 
-        .station-status {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        /* إخفاء وإظهار الأزرار بناءً على حالة التشغيل */
+        .apib-btn.playing .apib-play { display: none; }
+        .apib-btn.playing .apib-pause { display: flex; }
+        .apib-btn:not(.playing) .apib-play { display: flex; }
+        .apib-btn:not(.playing) .apib-pause { display: none; }
 
-        /* أنيميشن الصوت */
-        .audio-wave {
+        /* أنيميشن الموجات الصوتية */
+        .apib-loading {
             display: flex;
-            gap: 2px;
+            gap: 3px;
             align-items: flex-end;
-            height: 12px;
+            height: 20px;
             opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
         }
 
-        .audio-wave.active { opacity: 1; }
+        .apib-btn.playing .apib-loading {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        .audio-wave div {
+        .apib-loading div {
             width: 3px;
             background-color: var(--neon-blue);
             border-radius: 2px;
-            animation: wave-anim 1s infinite ease-in-out;
+            animation: line-scale 1s infinite ease-in-out;
         }
 
-        .audio-wave div:nth-child(1) { animation-delay: -0.4s; }
-        .audio-wave div:nth-child(2) { animation-delay: -0.2s; }
-        .audio-wave div:nth-child(3) { animation-delay: 0s; }
-        .audio-wave div:nth-child(4) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(1) { animation-delay: -0.4s; }
+        .apib-loading div:nth-child(2) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(3) { animation-delay: 0s; }
+        .apib-loading div:nth-child(4) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
 
-        @keyframes wave-anim {
+        @keyframes line-scale {
             0%, 100% { transform: scaleY(0.4); }
             50% { transform: scaleY(1); }
         }
 
-        /* تحكمات الصوت (Mute) */
-        .player-controls {
-            display: flex;
-            align-items: center;
-        }
-
-        /* أيقونات مخفية/ظاهرة حسب الحالة */
-        #icon-pause, #icon-mute { display: none; }
-
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
             .hero h1 { font-size: 2.8rem; }
-            .bottom-player { padding: 10px 15px; }
-            .station-name { font-size: 0.95rem; }
-            .player-btn { width: 38px; height: 38px; }
-            .player-btn svg { width: 20px; height: 20px; }
+            .apib-btn { bottom: 15px; left: 15px; padding: 8px 15px; font-size: 0.9rem; }
+            .apib-btn svg { height: 18px; width: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="bg-audio" autoplay>
+    <audio id="bg-audio" preload="none" crossorigin="anonymous">
         <source src="https://qurango.net/radio/mohammad_ayyub" type="audio/mpeg">
         متصفحك لا يدعم تشغيل الصوت.
     </audio>
+
+    <div id="radio-btn" class="apib-btn">
+        <div class="la-line-scale apib-loading la-sm text-white">
+            <div></div><div></div><div></div><div></div><div></div>
+        </div>
+        
+        <div class="apib-pause">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"></path>
+            </svg>
+            إذاعة محمد أيوب (إيقاف)
+        </div>
+        
+        <div class="apib-play">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
+                <path d="M160-80q-33 0-56.5-23.5T80-160v-480q0-25 13.5-45t36.5-29l473-193q14-5 27.5.5T649-887q5 14-.5 27.5T629-841L332-720h468q33 0 56.5 23.5T880-640v480q0 33-23.5 56.5T800-80H160Zm0-80h640v-280H160v280Zm160-40q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29ZM160-520h480v-40q0-17 11.5-28.5T680-600q17 0 28.5 11.5T720-560v40h80v-120H160v120Zm0 360v-280 280Z"></path>
+            </svg>
+            استمع لإذاعة محمد أيوب
+        </div>
+    </div>
 
     <nav>
         <a href="#" class="logo-container">
@@ -322,119 +305,45 @@
         <p>جميع الحقوق محفوظة &copy; 2026 - BFA BOT</p>
     </footer>
 
-    <div class="bottom-player">
-        <div class="player-info-container">
-            <button id="play-pause-btn" class="player-btn">
-                <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                    <path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"></path>
-                </svg>
-                <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                    <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"></path>
-                </svg>
-            </button>
-            
-            <div class="station-details">
-                <div class="station-name">إذاعة محمد أيوب</div>
-                <div class="station-status">
-                    <span id="status-text">متوقف</span>
-                    <div id="wave-anim" class="audio-wave">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="player-controls">
-            <button id="mute-btn" class="player-btn">
-                <svg id="icon-volume" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                    <path d="M760-481q0-83-44-151.5T598-735q-15-7-22-21.5t-2-29.5q6-16 21.5-23t31.5 0q97 43 155 131.5T840-481q0 108-58 196.5T627-153q-16 7-31.5 0T574-176q-5-15 2-29.5t22-21.5q74-34 118-102.5T760-481ZM280-360H160q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120l132-132q19-19 43.5-8.5T480-703v446q0 27-24.5 37.5T412-228L280-360Zm380-120q0 42-19 79.5T591-339q-10 6-20.5.5T560-356v-250q0-12 10.5-17.5t20.5.5q31 25 50 63t19 80ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z"></path>
-                </svg>
-                <svg id="icon-mute" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                    <path d="M440-360H320q-17 0-28.5-11.5T280-400v-160q0-17 11.5-28.5T320-600h120l132-132q19-19 43.5-8.5T640-703v446q0 27-24.5 37.5T572-228L440-360Zm-80-80h114l86 86v-252l-86 86H360v80Zm100-40Z"></path>
-                </svg>
-            </button>
-        </div>
-    </div>
-
     <script>
         const audio = document.getElementById('bg-audio');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const muteBtn = document.getElementById('mute-btn');
-        
-        const iconPlay = document.getElementById('icon-play');
-        const iconPause = document.getElementById('icon-pause');
-        const iconVolume = document.getElementById('icon-volume');
-        const iconMute = document.getElementById('icon-mute');
-        
-        const statusText = document.getElementById('status-text');
-        const waveAnim = document.getElementById('wave-anim');
-        
+        const radioBtn = document.getElementById('radio-btn');
         let isPlaying = false;
 
-        // دالة تحديث الواجهة (شغّال أو متوقف)
-        function updateUI(playing) {
-            if (playing) {
-                iconPlay.style.display = 'none';
-                iconPause.style.display = 'block';
-                statusText.innerText = 'بث مباشر';
-                waveAnim.classList.add('active');
-            } else {
-                iconPlay.style.display = 'block';
-                iconPause.style.display = 'none';
-                statusText.innerText = 'متوقف';
-                waveAnim.classList.remove('active');
-            }
-        }
-
-        // محاولة التشغيل فور تحميل الصفحة
-        window.addEventListener('load', function() {
+        // دالة لمحاولة تشغيل الصوت تلقائياً
+        function tryPlayAudio() {
             let playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     isPlaying = true;
-                    updateUI(true);
+                    radioBtn.classList.add('playing');
                 }).catch(error => {
-                    console.log("المتصفح يمنع التشغيل التلقائي. في انتظار تفاعل المستخدم.");
-                    updateUI(false);
+                    console.log("المتصفح يمنع التشغيل التلقائي. يجب أن يتفاعل المستخدم أولاً.");
                 });
             }
-        });
+        }
 
-        // التشغيل الاحتياطي مع أي ضغطة في الشاشة إذا منع المتصفح الـ Autoplay
+        // المحاولة الأولى بمجرد فتح الصفحة
+        window.addEventListener('load', tryPlayAudio);
+
+        // إذا منع المتصفح التشغيل، يتم تشغيله بمجرد أول ضغطة للزائر في أي مكان
         document.body.addEventListener('click', function() {
             if (!isPlaying) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    updateUI(true);
-                });
+                tryPlayAudio();
             }
         }, { once: true });
 
-        // زر التشغيل والإيقاف
-        playPauseBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
+        // التحكم اليدوي من زر الراديو
+        radioBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // لمنع التعارض مع كود الشاشة
             if (audio.paused) {
                 audio.play();
                 isPlaying = true;
-                updateUI(true);
+                radioBtn.classList.add('playing');
             } else {
                 audio.pause();
                 isPlaying = false;
-                updateUI(false);
-            }
-        });
-
-        // زر كتم الصوت
-        muteBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (audio.muted) {
-                audio.muted = false;
-                iconVolume.style.display = 'block';
-                iconMute.style.display = 'none';
-            } else {
-                audio.muted = true;
-                iconVolume.style.display = 'none';
-                iconMute.style.display = 'block';
+                radioBtn.classList.remove('playing');
             }
         });
     </script>
