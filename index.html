@@ -32,7 +32,7 @@
             cursor: url('cursor.cur'), auto !important;
         }
 
-        a, button, .social-box, .apib-btn, .ctrl-btn {
+        a, button, .social-box, .apib-btn, .ctrl-btn, .faq-question {
             cursor: url('cursor.cur'), pointer !important;
         }
 
@@ -53,9 +53,34 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.65);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: -1;
         }
+
+        /* ================= شريط الحالة العلوي ================= */
+        .top-status-bar {
+            background-color: #000;
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-icon.online { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+        .status-icon.offline { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .status-icon.blue { color: var(--neon-blue); }
 
         nav {
             display: flex; justify-content: space-between; align-items: center;
@@ -71,7 +96,7 @@
         .nav-links a { color: var(--text-light); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
         .nav-links a:hover { color: var(--neon-blue); }
 
-        .hero { text-align: center; padding: 120px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
+        .hero { text-align: center; padding: 100px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
         .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0, 210, 255, 0.3); }
         .hero h1 span { color: var(--neon-blue); }
         .hero p { font-size: 1.3rem; color: var(--text-gray); max-width: 700px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 10px; }
@@ -98,6 +123,68 @@
         .payment-card h3 { font-size: 1.8rem; margin: 15px 0; }
         .payment-numbers { font-size: 1.4rem; font-weight: bold; color: var(--neon-blue); margin: 20px 0; letter-spacing: 2px; }
 
+        /* ================= الأسئلة الشائعة (FAQ) ================= */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: rgba(15, 15, 19, 0.9);
+            border: 1px solid #222;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.15);
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: right;
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: transparent;
+            color: var(--text-light);
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            color: var(--neon-blue);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            color: var(--text-gray);
+            font-size: 1rem;
+            line-height: 1.8;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 300px; /* لضمان الفتح بسلاسة */
+            border-top: 1px solid #222;
+        }
+
         .social-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .social-box { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; background: rgba(15, 15, 19, 0.85); border-radius: 20px; text-decoration: none; color: var(--text-light); font-size: 1.2rem; font-weight: bold; transition: 0.3s; border: 1px solid #222; backdrop-filter: blur(5px); }
         .social-box i { font-size: 3rem; margin-bottom: 15px; transition: 0.3s; }
@@ -108,44 +195,57 @@
 
         footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-bottom: 60px; z-index: 10; position: relative; }
 
+        /* ================= زر الواتساب العائم ================= */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 110px; /* مرفوع قليلاً لعدم تغطية شريط الصوت */
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--whatsapp);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.8);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
         /* ================= شريط المشغل السفلي ================= */
         .audio-player-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            position: fixed; bottom: 0; left: 0; width: 100%;
             background-color: rgba(15, 15, 19, 0.95);
             border-top: 1px solid var(--neon-blue);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 40px;
-            z-index: 1000;
-            box-shadow: 0 -5px 20px rgba(0, 210, 255, 0.15);
-            backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 40px; z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0, 210, 255, 0.15); backdrop-filter: blur(10px);
         }
 
-        .apib-btn {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--neon-blue);
-            border-radius: 30px;
-            padding: 8px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s;
-            user-select: none;
-        }
-
+        .apib-btn { background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--neon-blue); border-radius: 30px; padding: 8px 20px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; user-select: none; }
         .apib-btn:hover { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
         .apib-btn svg { fill: var(--neon-blue); }
         .apib-play, .apib-pause { display: flex; align-items: center; gap: 10px; font-weight: bold; color: var(--text-light); }
-        
         .apib-btn.playing .apib-play { display: none; }
         .apib-btn.playing .apib-pause { display: flex; }
         .apib-btn:not(.playing) .apib-play { display: flex; }
         .apib-btn:not(.playing) .apib-pause { display: none; }
-
         .apib-loading { display: flex; gap: 3px; align-items: flex-end; height: 18px; opacity: 0; transition: 0.3s; }
         .apib-btn.playing .apib-loading { opacity: 1; }
         .apib-loading div { width: 3px; background-color: var(--neon-blue); border-radius: 2px; animation: line-scale 1s infinite ease-in-out; }
@@ -156,60 +256,47 @@
         .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
         @keyframes line-scale { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
 
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .track-info {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-        }
+        .player-controls { display: flex; align-items: center; gap: 30px; }
+        .track-info { text-align: right; display: flex; flex-direction: column; }
         .track-name { font-weight: bold; font-size: 1.1rem; color: var(--neon-blue); }
         .track-reciter { font-size: 0.9rem; color: var(--text-gray); }
-
-        .control-buttons {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .ctrl-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .control-buttons { display: flex; align-items: center; gap: 15px; }
+        .ctrl-btn { background: transparent; border: none; color: var(--text-light); font-size: 1.5rem; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
         .ctrl-btn:hover { color: var(--neon-blue); transform: scale(1.1); }
-        
-        .play-pause-btn {
-            width: 45px;
-            height: 45px;
-            background-color: var(--neon-blue);
-            color: #000;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
-        }
+        .play-pause-btn { width: 45px; height: 45px; background-color: var(--neon-blue); color: #000; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 0 10px rgba(0, 210, 255, 0.4); }
         .play-pause-btn:hover { background-color: var(--text-light); color: var(--neon-blue); box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
 
         @media (max-width: 768px) {
+            .top-status-bar { flex-direction: column; gap: 5px; padding: 10px; }
             nav { flex-direction: column; gap: 15px; padding: 15px; }
             .hero h1 { font-size: 2.8rem; }
             .audio-player-bar { flex-direction: column; padding: 10px; gap: 10px; height: auto; }
             .apib-btn { padding: 5px 15px; font-size: 0.9rem; }
             .player-controls { width: 100%; justify-content: space-between; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 130px; right: 15px; }
         }
     </style>
 </head>
 <body>
+
+    <a href="https://wa.me/201091055825" target="_blank" class="whatsapp-float" title="تواصل معنا على واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div class="top-status-bar" id="top-status-bar">
+        <div class="status-item">
+            <i class="fa-solid fa-users status-icon blue"></i>
+            <span>المشتركون: <span id="stat-subs">جاري التحميل...</span></span>
+        </div>
+        <div class="status-item">
+            <i class="fa-solid fa-ticket status-icon blue"></i>
+            <span>التسجيل: <span id="stat-avail">جاري التحميل...</span></span>
+        </div>
+        <div class="status-item">
+            <i class="fa-solid fa-robot status-icon blue"></i>
+            <span>حالة البوت: <span id="stat-online">جاري التحميل...</span></span>
+        </div>
+    </div>
 
     <audio id="bg-audio" autoplay></audio>
 
@@ -221,6 +308,7 @@
         <div class="nav-links">
             <a href="#features">المميزات</a>
             <a href="#payment">الاشتراك والدفع</a>
+            <a href="#faq">الأسئلة الشائعة</a>
             <a href="#contact">التواصل</a>
         </div>
     </nav>
@@ -256,6 +344,48 @@
                 <i class="fa-solid fa-shield-halved feature-icon"></i>
                 <h3>أمان وتخفي عالي</h3>
                 <p>برمجة احترافية تضمن استقرار البوت وحماية حساباتك من الحظر، مع تحديثات مستمرة لتخطي أنظمة حماية اللعبة.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2 class="section-title">الأسئلة الشائعة</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    هل البوت آمن ضد الحظر (البان)؟
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    نعم، تم تصميم BFA Bot بأنظمة تخفي متطورة تتحدث باستمرار لتجاوز حمايات اللعبة وتقليل نسبة الحظر إلى أدنى حد ممكن، ومع ذلك ننصح دائماً باتباع إرشادات الاستخدام الآمن التي نوضحها في الديسكورد.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    هل يعمل البوت على السيرفرات القديمة والحديثة؟
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    البوت مدعوم ليعمل بكفاءة على أغلب السيرفرات. يتم إصدار تحديثات دورية لضمان التوافق مع أي تغييرات قد تطرأ على اللعبة الرسمية.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    كيف أحصل على التحديثات بعد الاشتراك؟
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    بمجرد اشتراكك، ستحصل على رتبة مخصصة في سيرفر الديسكورد الخاص بنا، ومن خلاله يمكنك تحميل جميع التحديثات الجديدة فور صدورها مجاناً طوال فترة اشتراكك.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    هل يمكنني الدفع بعملات أخرى غير المذكورة؟
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    حالياً نقبل الدفع عبر فودافون كاش للمصريين، ومنصة Binance (USDT) للمشتركين من خارج مصر. إذا كان لديك طريقة دفع أخرى، يرجى التواصل معنا عبر الدعم الفني.
+                </div>
             </div>
         </div>
     </section>
@@ -318,8 +448,8 @@
 
         <div class="player-controls">
             <div class="track-info">
-                <div class="track-name" id="track-name">سورة الفاتحة</div>
-                <div class="track-reciter">تلاوة: محمد أيوب</div>
+                <div class="track-name" id="track-name">سورة يوسف</div>
+                <div class="track-reciter">تلاوة حجازية خاشعة</div>
             </div>
             
             <div class="control-buttons">
@@ -339,6 +469,64 @@
     </div>
 
     <script>
+        // ================= سكريبت جلب الحالة من GitHub =================
+        async function fetchStatus() {
+            try {
+                // الكود ده بيقرأ من ملف status.json اللي هتعمله في مستودعك
+                // طالما الملفين في نفس المستودع، المتصفح هيقدر يقرأه فوراً
+                const response = await fetch('status.json?v=' + new Date().getTime()); // v= time لمنع الكاش
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                
+                // تحديث عدد المشتركين
+                document.getElementById('stat-subs').innerText = data.subscribers + ' 👤';
+                
+                // تحديث حالة الأماكن
+                const availElement = document.getElementById('stat-avail');
+                if (data.isAvailable) {
+                    availElement.innerHTML = '<span class="status-icon online">متاحة ✔️</span>';
+                } else {
+                    availElement.innerHTML = '<span class="status-icon offline">مكتملة ❌</span>';
+                }
+
+                // تحديث حالة البوت
+                const onlineElement = document.getElementById('stat-online');
+                if (data.isOnline) {
+                    onlineElement.innerHTML = '<span class="status-icon online">متصل 🟢</span>';
+                } else {
+                    onlineElement.innerHTML = '<span class="status-icon offline">متوقف للصيانة 🔴</span>';
+                }
+
+            } catch (error) {
+                console.log('Error fetching status:', error);
+                document.getElementById('stat-subs').innerText = 'غير متوفر';
+                document.getElementById('stat-avail').innerText = 'غير متوفر';
+                document.getElementById('stat-online').innerText = 'غير متوفر';
+            }
+        }
+        
+        // تشغيل جلب الحالة فوراً
+        fetchStatus();
+
+
+        // ================= سكريبت الأسئلة الشائعة (FAQ) =================
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                // إغلاق كل الأسئلة المفتوحة
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                // فتح السؤال الحالي إذا لم يكن مفتوحاً
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+
+        // ================= سكريبت مشغل القرآن الكريم =================
         const audio = document.getElementById('bg-audio');
         const sideRadioBtn = document.getElementById('side-radio-btn');
         const mainPlayBtn = document.getElementById('main-play-btn');
@@ -349,7 +537,7 @@
         
         let isPlaying = false;
 
-const playlist = [
+       const playlist = [
     { name: "سورة الفاتحة", src: "https://media.altilawat.com/1Ayoub.mp3" },
     { name: "سورة البقرة", src: "https://media.altilawat.com/2Ayoub.mp3" },
     { name: "سورة آل عمران", src: "https://media.altilawat.com/3Ayoub.mp3" },
@@ -465,10 +653,9 @@ const playlist = [
     { name: "سورة الفلق", src: "https://media.altilawat.com/113Ayoub.mp3" },
     { name: "سورة الناس", src: "https://media.altilawat.com/114Ayoub.mp3" }
 ];
-
         let currentTrackIndex = 0;
 
-        function updateUI(playing) {
+        function updateAudioUI(playing) {
             if (playing) {
                 sideRadioBtn.classList.add('playing');
                 mainIcon.classList.remove('fa-play');
@@ -481,34 +668,28 @@ const playlist = [
             trackNameDisplay.innerText = playlist[currentTrackIndex].name;
         }
 
-        // دالة هجومية لمحاولة التشغيل
         function forcePlay() {
             if (!audio.src || audio.src === window.location.href) {
                 audio.src = playlist[currentTrackIndex].src;
             }
-            
             let playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
                     isPlaying = true;
-                    updateUI(true);
+                    updateAudioUI(true);
                 }).catch(error => {
-                    console.log("المتصفح صد محاولة التشغيل التلقائي بسبب سياسات الأمان.");
                     isPlaying = false;
-                    updateUI(false);
+                    updateAudioUI(false);
                 });
             }
         }
 
-        // محاولة التشغيل فوراً بمجرد تحميل هيكل الصفحة
         window.addEventListener('DOMContentLoaded', forcePlay);
-        
-        // محاولة أخرى بمجرد اكتمال تحميل الصور والخطوط
         window.addEventListener('load', forcePlay);
 
-        // الخطة البديلة: التشغيل مع أول كليك في أي مكان بالشاشة (لتخطي حظر المتصفح)
-        document.body.addEventListener('click', function() {
-            if (!isPlaying) {
+        document.body.addEventListener('click', function(e) {
+            // نمنع التشغيل لو الضغطة كانت على أزرار الأسئلة الشائعة عشان ميتعارضوش
+            if (!isPlaying && !e.target.closest('.faq-item')) {
                 forcePlay();
             }
         });
@@ -543,7 +724,7 @@ const playlist = [
             } else {
                 audio.pause();
                 isPlaying = false;
-                updateUI(false);
+                updateAudioUI(false);
             }
         }
 
