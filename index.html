@@ -192,10 +192,7 @@
 </head>
 <body>
 
-    <audio id="bg-audio" preload="none" crossorigin="anonymous">
-        <source src="https://qurango.net/radio/mohammad_ayyub" type="audio/mpeg">
-        متصفحك لا يدعم تشغيل الصوت.
-    </audio>
+    <audio id="bg-audio"></audio>
 
     <div id="radio-btn" class="apib-btn">
         <div class="la-line-scale apib-loading la-sm text-white">
@@ -206,14 +203,14 @@
             <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
                 <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"></path>
             </svg>
-            إذاعة محمد أيوب (إيقاف)
+            تلاوة محمد أيوب (إيقاف)
         </div>
         
         <div class="apib-play">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960">
                 <path d="M160-80q-33 0-56.5-23.5T80-160v-480q0-25 13.5-45t36.5-29l473-193q14-5 27.5.5T649-887q5 14-.5 27.5T629-841L332-720h468q33 0 56.5 23.5T880-640v480q0 33-23.5 56.5T800-80H160Zm0-80h640v-280H160v280Zm160-40q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29ZM160-520h480v-40q0-17 11.5-28.5T680-600q17 0 28.5 11.5T720-560v40h80v-120H160v120Zm0 360v-280 280Z"></path>
             </svg>
-            استمع لإذاعة محمد أيوب
+            استمع لمحمد أيوب
         </div>
     </div>
 
@@ -310,8 +307,19 @@
         const radioBtn = document.getElementById('radio-btn');
         let isPlaying = false;
 
-        // دالة لمحاولة تشغيل الصوت تلقائياً
-        function tryPlayAudio() {
+        // سحبنا الروابط المباشرة للشيخ محمد أيوب من الموقع اللي إنت طلبته
+        const playlist = [
+            "https://server8.mp3quran.net/ayyub/001.mp3", // الفاتحة
+            "https://server8.mp3quran.net/ayyub/036.mp3", // يس
+            "https://server8.mp3quran.net/ayyub/055.mp3", // الرحمن
+            "https://server8.mp3quran.net/ayyub/056.mp3", // الواقعة
+            "https://server8.mp3quran.net/ayyub/067.mp3"  // الملك
+        ];
+
+        let currentTrack = 0;
+
+        function loadAndPlay() {
+            audio.src = playlist[currentTrack];
             let playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => {
@@ -323,20 +331,32 @@
             }
         }
 
-        // المحاولة الأولى بمجرد فتح الصفحة
-        window.addEventListener('load', tryPlayAudio);
+        // تشغيل السورة التالية تلقائياً لما السورة الحالية تخلص
+        audio.addEventListener('ended', function() {
+            currentTrack++;
+            if (currentTrack >= playlist.length) {
+                currentTrack = 0; // يرجع لأول سورة لو الليستة خلصت
+            }
+            loadAndPlay();
+        });
 
-        // إذا منع المتصفح التشغيل، يتم تشغيله بمجرد أول ضغطة للزائر في أي مكان
+        // محاولة التشغيل فور تحميل الصفحة
+        window.addEventListener('load', loadAndPlay);
+
+        // إذا المتصفح منع التشغيل، يتم تشغيله بمجرد أول ضغطة للزائر في أي مكان
         document.body.addEventListener('click', function() {
             if (!isPlaying) {
-                tryPlayAudio();
+                loadAndPlay();
             }
         }, { once: true });
 
-        // التحكم اليدوي من زر الراديو
+        // التحكم اليدوي من الزرار
         radioBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // لمنع التعارض مع كود الشاشة
+            event.stopPropagation(); // لمنع التعارض
             if (audio.paused) {
+                if (!audio.src || audio.src === window.location.href) {
+                    audio.src = playlist[currentTrack];
+                }
                 audio.play();
                 isPlaying = true;
                 radioBtn.classList.add('playing');
