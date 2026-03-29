@@ -32,32 +32,39 @@
         }
 
         body {
-            background-color: var(--dark-bg);
+            /* تم تعديل الخلفية لتكون الصورة الجديدة */
+            background-image: url('image_7.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
             color: var(--text-light);
             line-height: 1.6;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* تأثير الخلفية الشبكية */
-        body::before {
+        /* تم إزالة الشبكة النيونية القديمة (::before) لمنع التداخل مع الصورة الجديدة */
+        
+        /* أضفنا طبقة تعتيم خفيفة فوق الصورة لضمان وضوح النص */
+        body::after {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 210, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 210, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* طبقة تعتيم بنسبة 60% */
             z-index: -1;
         }
 
-        /* شريط التنقل */
+        /* شريط التنقل - تم تعتيم الخلفية لزيادة الوضوح */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 50px;
-            background-color: rgba(3, 3, 3, 0.9);
+            background-color: rgba(3, 3, 3, 0.95);
             border-bottom: 1px solid rgba(0, 210, 255, 0.2);
             position: sticky;
             top: 0;
@@ -111,6 +118,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            z-index: 10;
         }
 
         .hero h1 {
@@ -129,6 +137,10 @@
             color: var(--text-gray);
             max-width: 700px;
             margin-bottom: 30px;
+            /* تم إضافة خلفية تعتيم للنص */
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
         }
 
         /* الأزرار */
@@ -164,8 +176,10 @@
             background-color: transparent;
             color: var(--text-light);
             border: 1px solid var(--youtube);
+            /* تعتيم الخلفية لزر يوتيوب */
+            background-color: rgba(0, 0, 0, 0.3);
         }
-        .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.1); border-color: #ff3333; transform: translateY(-3px); }
+        .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.15); border-color: #ff3333; transform: translateY(-3px); }
 
         /* الأقسام المشتركة */
         .section-title {
@@ -173,15 +187,18 @@
             font-size: 2.5rem;
             margin-bottom: 50px;
             color: var(--neon-blue);
+            z-index: 10;
         }
 
         section {
             padding: 80px 20px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
 
-        /* المميزات */
+        /* المميزات - تم تعتيم الكروت لزيادة الوضوح */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -189,18 +206,19 @@
         }
 
         .feature-card {
-            background: var(--card-bg);
+            background: rgba(15, 15, 19, 0.85); /* كارت شبه شفاف مع خلفية داكنة */
             padding: 30px;
             border-radius: 15px;
             border: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
             text-align: center;
+            backdrop-filter: blur(5px);
         }
 
         .feature-card:hover {
             border-color: var(--neon-blue);
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15);
         }
 
         .feature-icon {
@@ -209,7 +227,7 @@
             margin-bottom: 20px;
         }
 
-        /* طرق الدفع */
+        /* طرق الدفع - تم تعتيم الكروت */
         .payment-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -217,13 +235,14 @@
         }
 
         .payment-card {
-            background: linear-gradient(145deg, #111, #0a0a0a);
+            background: rgba(10, 10, 10, 0.9); /* كارت أكثر تعتيماً */
             padding: 40px 30px;
             border-radius: 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
             border: 1px solid #222;
+            backdrop-filter: blur(5px);
         }
 
         .payment-card.vf::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--vodafone); }
@@ -232,7 +251,7 @@
         .payment-card h3 { font-size: 1.8rem; margin: 15px 0; }
         .payment-numbers { font-size: 1.4rem; font-weight: bold; color: var(--neon-blue); margin: 20px 0; letter-spacing: 2px; }
 
-        /* التواصل */
+        /* التواصل - تم تعتيم المربعات */
         .social-container {
             display: flex;
             justify-content: center;
@@ -247,7 +266,7 @@
             justify-content: center;
             width: 150px;
             height: 150px;
-            background: var(--card-bg);
+            background: rgba(15, 15, 19, 0.85); /* صندوق شبه شفاف مع خلفية داكنة */
             border-radius: 20px;
             text-decoration: none;
             color: var(--text-light);
@@ -255,14 +274,15 @@
             font-weight: bold;
             transition: 0.3s;
             border: 1px solid #222;
+            backdrop-filter: blur(5px);
         }
 
         .social-box i { font-size: 3rem; margin-bottom: 15px; transition: 0.3s; }
         
-        .social-box.fb:hover { border-color: var(--facebook); box-shadow: 0 0 20px rgba(24, 119, 242, 0.2); }
+        .social-box.fb:hover { border-color: var(--facebook); box-shadow: 0 0 20px rgba(24, 119, 242, 0.25); }
         .social-box.fb:hover i { color: var(--facebook); }
 
-        .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); }
+        .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.25); }
         .social-box.wa:hover i { color: var(--whatsapp); }
 
         /* الفوتر */
@@ -272,6 +292,7 @@
             background: #000;
             border-top: 1px solid #111;
             margin-top: 50px;
+            z-index: 10;
         }
 
         /* الموبايل */
