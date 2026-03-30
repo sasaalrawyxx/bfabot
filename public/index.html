@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFA BOT | أقوى بوت للعبة Conquer Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png">
+    
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --neon-blue: #00d2ff;
+            --dark-bg: #030303;
+            --card-bg: #0f0f13;
+            --text-light: #ffffff;
+            --text-gray: #b3b3b3;
+            --discord: #5865F2;
+            --whatsapp: #25D366;
+            --youtube: #FF0000;
+            --facebook: #1877F2;
+            --binance: #F3BA2F;
+            --vodafone: #E60000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            cursor: url('cursor.cur'), auto !important;
+        }
+
+        /* ================= شريط التمرير (Scrollbar) ================= */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00a0cc; }
+
+        a, button, .social-box, .apib-btn, .ctrl-btn, .faq-question {
+            cursor: url('cursor.cur'), pointer !important;
+        }
+
+        body {
+            background-image: url('image_7.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            color: var(--text-light);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 90px;
+        }
+        
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); z-index: -1;
+        }
+
+        /* ================= دعم اللغة الإنجليزية ================= */
+        html[dir="ltr"] body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        html[dir="ltr"] .faq-question { text-align: left; flex-direction: row-reverse; }
+        html[dir="ltr"] .pricing-card ul { text-align: left; }
+        html[dir="ltr"] .pricing-card ul li i { margin-left: 0; margin-right: 10px; }
+        html[dir="ltr"] .track-info { text-align: left; }
+        html[dir="ltr"] .logo-text { letter-spacing: 2px; }
+
+        /* ================= شاشة التحميل (Preloader) ================= */
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-bg);
+            z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease;
+        }
+        .pulse-logo {
+            width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--neon-blue);
+            animation: pulse-glow 1.5s infinite;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(0, 210, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+        }
+
+        /* ================= حركات النزول (Scroll Animations) ================= */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        /* ================= شريط الحالة العلوي ================= */
+        .top-status-bar {
+            background-color: #000; color: var(--text-light); display: flex; justify-content: center;
+            align-items: center; gap: 30px; padding: 8px 20px; font-size: 0.9rem; font-weight: bold;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3); flex-wrap: wrap;
+        }
+        .status-item { display: flex; align-items: center; gap: 8px; }
+        .status-icon.online { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+        .status-icon.offline { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .status-icon.blue { color: var(--neon-blue); }
+
+        /* ================= شريط التنقل وزر اللغة ================= */
+        nav {
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 50px;
+            background-color: rgba(3, 3, 3, 0.95); border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--neon-blue); box-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
+        .logo-text { font-size: 26px; font-weight: 900; color: var(--text-light); letter-spacing: 1px; }
+        .logo-text span { color: var(--neon-blue); }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { color: var(--text-light); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--neon-blue); }
+        
+        .lang-btn {
+            background: transparent; color: var(--neon-blue); border: 2px solid var(--neon-blue);
+            padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 1rem;
+            margin: 0 15px; transition: 0.3s;
+        }
+        .lang-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
+
+        .hero { text-align: center; padding: 100px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10; }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0, 210, 255, 0.3); }
+        .hero h1 span { color: var(--neon-blue); }
+        .hero p { font-size: 1.3rem; color: var(--text-gray); max-width: 700px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.5); padding: 10px 20px; border-radius: 10px; }
+
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 12px 30px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s; border: none; }
+        .btn-discord { background-color: var(--discord); color: white; box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
+        .btn-discord:hover { background-color: #4752c4; transform: translateY(-3px); }
+        .btn-youtube { background-color: rgba(0, 0, 0, 0.3); color: var(--text-light); border: 1px solid var(--youtube); }
+        .btn-youtube:hover { background-color: rgba(255, 0, 0, 0.15); border-color: #ff3333; transform: translateY(-3px); }
+
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--neon-blue); z-index: 10; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
+
+        /* ================= قسم عرض الفيديو (Showcase) ================= */
+        .showcase-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.15);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: none;
+        }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: rgba(15, 15, 19, 0.85); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; text-align: center; backdrop-filter: blur(5px); }
+        .feature-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15); }
+        .feature-icon { font-size: 40px; color: var(--neon-blue); margin-bottom: 20px; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .pricing-card { background: rgba(10, 10, 10, 0.9); border: 1px solid #333; border-radius: 20px; padding: 40px 30px; text-align: center; transition: 0.4s; position: relative; overflow: hidden; backdrop-filter: blur(10px); }
+        .pricing-card:hover { border-color: var(--neon-blue); transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 210, 255, 0.2); }
+        .pricing-card.popular { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 210, 255, 0.15); }
+        .pricing-card.popular::before { content: "الأكثر طلباً"; position: absolute; top: 20px; right: -35px; background: var(--neon-blue); color: #000; padding: 5px 40px; transform: rotate(45deg); font-weight: bold; font-size: 0.9rem; }
+        html[dir="ltr"] .pricing-card.popular::before { content: "POPULAR"; right: auto; left: -35px; transform: rotate(-45deg); }
+        .pricing-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .pricing-card .price { font-size: 2.5rem; color: var(--neon-blue); font-weight: 900; margin-bottom: 20px; }
+        .pricing-card .price span { font-size: 1.2rem; color: var(--text-gray); }
+        .pricing-card ul { list-style: none; margin-bottom: 30px; text-align: right; }
+        .pricing-card ul li { margin-bottom: 10px; font-size: 1.1rem; }
+        .pricing-card ul li i { color: var(--neon-blue); margin-left: 10px; }
+        .btn-buy { display: inline-block; width: 100%; padding: 12px; background: transparent; border: 2px solid var(--neon-blue); color: var(--neon-blue); text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        .pricing-card:hover .btn-buy, .pricing-card.popular .btn-buy { background: var(--neon-blue); color: #000; }
+
+        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .payment-card { background: rgba(10, 10, 10, 0.9); padding: 40px 30px; border-radius: 20px; text-align: center; position: relative; overflow: hidden; border: 1px solid #222; backdrop-filter: blur(5px); }
+        .payment-card.vf::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--vodafone); }
+        .payment-card.binance::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--binance); }
+        .payment-card h3 { font-size: 1.8rem; margin: 15px 0; }
+        .payment-numbers { font-size: 1.4rem; font-weight: bold; color: var(--neon-blue); margin: 20px 0; letter-spacing: 2px; }
+
+        .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .faq-item { background: rgba(15, 15, 19, 0.9); border: 1px solid #222; border-radius: 10px; overflow: hidden; transition: all 0.3s; }
+        .faq-item.active { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 210, 255, 0.15); }
+        .faq-question { width: 100%; text-align: right; padding: 20px; font-size: 1.1rem; font-weight: bold; background: transparent; color: var(--text-light); border: none; display: flex; justify-content: space-between; align-items: center; }
+        .faq-question i { color: var(--neon-blue); transition: transform 0.3s; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; color: var(--text-gray); font-size: 1rem; line-height: 1.8; background-color: rgba(0, 0, 0, 0.3); }
+        .faq-item.active .faq-answer { padding: 20px; max-height: 300px; border-top: 1px solid #222; }
+
+        .social-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .social-box { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; background: rgba(15, 15, 19, 0.85); border-radius: 20px; text-decoration: none; color: var(--text-light); font-size: 1.2rem; font-weight: bold; transition: 0.3s; border: 1px solid #222; backdrop-filter: blur(5px); }
+        .social-box i { font-size: 3rem; margin-bottom: 15px; transition: 0.3s; }
+        .social-box.fb:hover { border-color: var(--facebook); box-shadow: 0 0 20px rgba(24, 119, 242, 0.25); }
+        .social-box.fb:hover i { color: var(--facebook); }
+        .social-box.wa:hover { border-color: var(--whatsapp); box-shadow: 0 0 20px rgba(37, 211, 102, 0.25); }
+        .social-box.wa:hover i { color: var(--whatsapp); }
+
+        footer { text-align: center; padding: 30px; background: #000; border-top: 1px solid #111; margin-bottom: 60px; z-index: 10; position: relative; }
+
+        .whatsapp-float { position: fixed; bottom: 110px; right: 30px; width: 60px; height: 60px; background-color: var(--whatsapp); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 2rem; box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); z-index: 999; text-decoration: none; transition: all 0.3s; animation: pulse 2s infinite; }
+        .whatsapp-float:hover { transform: scale(1.1); color: #fff; box-shadow: 0 0 30px rgba(37, 211, 102, 0.8); }
+
+        .audio-player-bar { position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(15, 15, 19, 0.95); border-top: 1px solid var(--neon-blue); display: flex; align-items: center; justify-content: space-between; padding: 10px 40px; z-index: 1000; box-shadow: 0 -5px 20px rgba(0, 210, 255, 0.15); backdrop-filter: blur(10px); }
+        .apib-btn { background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--neon-blue); border-radius: 30px; padding: 8px 20px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; user-select: none; }
+        .apib-btn:hover { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+        .apib-btn svg { fill: var(--neon-blue); }
+        .apib-play, .apib-pause { display: flex; align-items: center; gap: 10px; font-weight: bold; color: var(--text-light); }
+        .apib-btn.playing .apib-play { display: none; }
+        .apib-btn.playing .apib-pause { display: flex; }
+        .apib-btn:not(.playing) .apib-play { display: flex; }
+        .apib-btn:not(.playing) .apib-pause { display: none; }
+        .apib-loading { display: flex; gap: 3px; align-items: flex-end; height: 18px; opacity: 0; transition: 0.3s; }
+        .apib-btn.playing .apib-loading { opacity: 1; }
+        .apib-loading div { width: 3px; background-color: var(--neon-blue); border-radius: 2px; animation: line-scale 1s infinite ease-in-out; }
+        .apib-loading div:nth-child(1) { animation-delay: -0.4s; }
+        .apib-loading div:nth-child(2) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(3) { animation-delay: 0s; }
+        .apib-loading div:nth-child(4) { animation-delay: -0.2s; }
+        .apib-loading div:nth-child(5) { animation-delay: -0.4s; }
+
+        .player-controls { display: flex; align-items: center; gap: 30px; }
+        .track-info { text-align: right; display: flex; flex-direction: column; }
+        .track-name { font-weight: bold; font-size: 1.1rem; color: var(--neon-blue); }
+        .track-reciter { font-size: 0.9rem; color: var(--text-gray); }
+        .control-buttons { display: flex; align-items: center; gap: 15px; }
+        .ctrl-btn { background: transparent; border: none; color: var(--text-light); font-size: 1.5rem; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .ctrl-btn:hover { color: var(--neon-blue); transform: scale(1.1); }
+        .play-pause-btn { width: 45px; height: 45px; background-color: var(--neon-blue); color: #000; border-radius: 50%; font-size: 1.2rem; box-shadow: 0 0 10px rgba(0, 210, 255, 0.4); }
+        .play-pause-btn:hover { background-color: var(--text-light); color: var(--neon-blue); box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+
+        @media (max-width: 768px) {
+            .top-status-bar { flex-direction: column; gap: 5px; padding: 10px; }
+            nav { flex-direction: column; gap: 15px; padding: 15px; }
+            .hero h1 { font-size: 2.8rem; }
+            .audio-player-bar { flex-direction: column; padding: 10px; gap: 10px; height: auto; }
+            .apib-btn { padding: 5px 15px; font-size: 0.9rem; }
+            .player-controls { width: 100%; justify-content: space-between; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 130px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader" class="preloader">
+        <img src="logo.png" alt="Loading BFA Bot..." class="pulse-logo">
+    </div>
+
+    <a href="https://wa.me/201091055825" target="_blank" class="whatsapp-float" title="تواصل معنا على واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div class="top-status-bar" id="top-status-bar">
+        <div class="status-item">
+            <i class="fa-solid fa-users status-icon blue"></i>
+            <span data-en="Subscribers: ">المشتركون: </span><span id="stat-subs">جاري التحميل...</span>
+        </div>
+        <div class="status-item">
+            <i class="fa-solid fa-ticket status-icon blue"></i>
+            <span data-en="Registration: ">التسجيل: </span><span id="stat-avail">جاري التحميل...</span>
+        </div>
+        <div class="status-item">
+            <i class="fa-solid fa-robot status-icon blue"></i>
+            <span data-en="Bot Status: ">حالة البوت: </span><span id="stat-online">جاري التحميل...</span>
+        </div>
+    </div>
+
+    <audio id="bg-audio" autoplay></audio>
+
+    <nav>
+        <a href="#" class="logo-container">
+            <img src="logo.png" alt="BFA Bot Logo" class="logo-img">
+            <div class="logo-text">BFA <span>BOT</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="#features" data-en="Features">المميزات</a>
+            <a href="#showcase" data-en="Showcase">فيديو البوت</a>
+            <a href="#pricing" data-en="Pricing">الأسعار</a>
+            <a href="#faq" data-en="FAQ">الأسئلة الشائعة</a>
+            <a href="#contact" data-en="Contact Us">التواصل</a>
+            <button id="lang-btn" class="lang-btn">EN</button>
+        </div>
+    </nav>
+
+    <section class="hero animate-on-scroll">
+        <h1 data-en="Total Control in <span>Conquer Online</span>">السيطرة الكاملة في <span>Conquer Online</span></h1>
+        <p data-en="Level up, multiply profits, and fully manage your accounts with BFA Bot. The smartest and safest tool designed specifically for your in-game needs.">طور مستوى شخصيتك، ضاعف أرباحك، وتحكم في حساباتك بالكامل مع BFA Bot. الأداة الأذكى والأكثر أماناً المصممة خصيصاً لتلبية احتياجاتك في اللعبة.</p>
+        
+        <div class="btn-group">
+            <a href="https://discord.gg/qBDhNqDCnA" target="_blank" class="btn btn-discord">
+                <i class="fa-brands fa-discord"></i> <span data-en="Join Discord">انضم لسيرفر الديسكورد</span>
+            </a>
+            <a href="https://www.youtube.com/@BFA1411" target="_blank" class="btn btn-youtube">
+                <i class="fa-brands fa-youtube"></i> <span data-en="Bot Tutorials">شروحات البوت</span>
+            </a>
+        </div>
+    </section>
+
+    <section id="features" class="animate-on-scroll">
+        <h2 class="section-title" data-en="Why BFA Bot?">لماذا BFA Bot؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-crosshairs feature-icon"></i>
+                <h3 data-en="Auto Farming & Leveling">صيد وتلفيل تلقائي</h3>
+                <p data-en="Smart farming system that works 24/7 to level up your character without any intervention.">نظام ذكي للزراعة (Farming) ورفع المستوى التلقائي، يعمل بكفاءة عالية على مدار الساعة لتطوير شخصيتك دون تدخل منك.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-store feature-icon"></i>
+                <h3 data-en="Auto-Seller System">نظام التاجر الآلي (Auto-Seller)</h3>
+                <p data-en="Advanced system to manage your in-game trades (CPs & Silver) with super capabilities.">نظام متطور لإدارة المبيعات والتجارة داخل اللعبة (CPs & Silver) مع إمكانيات فائقة لتسهيل عمليات التبادل.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-shield-halved feature-icon"></i>
+                <h3 data-en="High Security & Anti-Ban">أمان وتخفي عالي</h3>
+                <p data-en="Professional programming ensuring bot stability and account protection from bans.">برمجة احترافية تضمن استقرار البوت وحماية حساباتك من الحظر، مع تحديثات مستمرة لتخطي أنظمة حماية اللعبة.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="showcase" class="animate-on-scroll">
+        <h2 class="section-title" data-en="Watch Bot in Action">شاهد البوت في العمل</h2>
+        <div class="showcase-container">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/1raiLoHJ3_U?autoplay=1&mute=1" title="BFA Bot Showcase" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="animate-on-scroll">
+        <h2 class="section-title" data-en="Subscription Plans">باقات الاشتراك</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 data-en="1 Month Plan">اشتراك شهر</h3>
+                <div class="price">800 <span>ج.م</span> <br><span style="font-size: 1.5rem; color: var(--text-gray);">$20</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Full Auto-Hunting">صيد تلقائي متكامل</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Basic Auto-Seller">تاجر آلي أساسي</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Free Updates">تحديثات مجانية</span></li>
+                </ul>
+                <a href="https://wa.me/201091055825?text=أرغب بالاشتراك في الباقة الشهرية لبوت BFA" target="_blank" class="btn-buy" data-en="Subscribe Now">اشترك الآن</a>
+            </div>
+            <div class="pricing-card popular">
+                <h3 data-en="3 Months Plan">اشتراك 3 شهور</h3>
+                <div class="price">2200 <span>ج.م</span> <br><span style="font-size: 1.5rem; color: var(--text-gray);">$60</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="All Monthly Features">جميع مميزات الباقة الشهرية</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Special Discount">خصم خاص على السعر</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Priority Support">أولوية في الدعم الفني</span></li>
+                </ul>
+                <a href="https://wa.me/201091055825?text=أرغب بالاشتراك في باقة الـ 3 شهور لبوت BFA" target="_blank" class="btn-buy" data-en="Subscribe Now">اشترك الآن</a>
+            </div>
+            <div class="pricing-card">
+                <h3 data-en="6 Months Plan">اشتراك 6 شهور</h3>
+                <div class="price">4200 <span>ج.م</span> <br><span style="font-size: 1.5rem; color: var(--text-gray);">$115</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Unlimited Accounts">تشغيل عدد غير محدود من الحسابات</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="Advanced Auto-Seller">تاجر آلي متقدم جداً</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-en="VIP Discord Role">رتبة VIP في الديسكورد</span></li>
+                </ul>
+                <a href="https://wa.me/201091055825?text=أرغب بالاشتراك في باقة الـ 6 شهور لبوت BFA" target="_blank" class="btn-buy" data-en="Subscribe Now">اشترك الآن</a>
+            </div>
+        </div>
+        
+        <div class="payment-grid">
+            <div class="payment-card vf">
+                <i class="fa-solid fa-wallet" style="font-size: 3rem; color: var(--vodafone);"></i>
+                <h3 data-en="Vodafone Cash">فودافون كاش</h3>
+                <div class="payment-numbers">01091055825 <br> 01062091175</div>
+            </div>
+            <div class="payment-card binance">
+                <i class="fa-brands fa-btc" style="font-size: 3rem; color: var(--binance);"></i>
+                <h3>Binance (USDT)</h3>
+                <p data-en="Available for clients outside Egypt. Contact us for Pay ID.">متاح الدفع للعملاء من خارج مصر، تواصل معنا للحصول على Pay ID.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="animate-on-scroll">
+        <h2 class="section-title" data-en="Frequently Asked Questions">الأسئلة الشائعة</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question"><span data-en="Is the bot safe from bans?">هل البوت آمن ضد الحظر (البان)؟</span> <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer" data-en="Yes, BFA Bot is designed with advanced stealth systems that constantly update to bypass game protections.">نعم، تم تصميم BFA Bot بأنظمة تخفي متطورة تتحدث باستمرار لتجاوز حمايات اللعبة وتقليل نسبة الحظر إلى أدنى حد ممكن.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-en="Does the bot work on old and new servers?">هل يعمل البوت على السيرفرات القديمة والحديثة؟</span> <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer" data-en="The bot is supported to work efficiently on most servers with regular updates.">البوت مدعوم ليعمل بكفاءة على أغلب السيرفرات. يتم إصدار تحديثات دورية لضمان التوافق مع أي تغييرات.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-en="How do I get updates after subscribing?">كيف أحصل على التحديثات بعد الاشتراك؟</span> <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer" data-en="Once subscribed, you will get a dedicated role in our Discord server to download updates instantly.">بمجرد اشتراكك، ستحصل على رتبة مخصصة في سيرفر الديسكورد الخاص بنا لتحميل التحديثات فور صدورها مجاناً.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="animate-on-scroll">
+        <h2 class="section-title" data-en="Contact Us">تواصل معنا</h2>
+        <div class="social-container">
+            <a href="https://wa.me/201091055825" target="_blank" class="social-box wa">
+                <i class="fa-brands fa-whatsapp"></i> <span data-en="WhatsApp">واتساب</span>
+            </a>
+            <a href="https://www.facebook.com/bfabots" target="_blank" class="social-box fb">
+                <i class="fa-brands fa-facebook-f"></i> <span data-en="Facebook">فيسبوك</span>
+            </a>
+            <a href="https://discord.gg/qBDhNqDCnA" target="_blank" class="social-box" style="border-color: #222;">
+                <i class="fa-brands fa-discord" style="color: var(--discord);"></i> <span data-en="Discord">ديسكورد</span>
+            </a>
+            <a href="https://www.youtube.com/@BFA1411" target="_blank" class="social-box" style="border-color: #222;">
+                <i class="fa-brands fa-youtube" style="color: var(--youtube);"></i> <span data-en="YouTube">يوتيوب</span>
+            </a>
+        </div>
+    </section>
+<footer>
+        <p><span data-en="All Rights Reserved">جميع الحقوق محفوظة</span> &copy; 2026 - BFA BOT</p>
+        <div style="margin-top: 15px; display: flex; justify-content: center;">
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fsasaalrawyxx.github.io%2Fbfabot&count_bg=%2300D2FF&title_bg=%23000000&icon=&icon_color=%23E7E7E7&title=%D8%A7%D9%84%D8%B2%D9%88%D8%A7%D8%B1&edge_flat=true" alt="Visitor Count" style="border-radius: 5px; box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);">
+        </div>
+    </footer>
+
+    <div class="audio-player-bar">
+        <div id="side-radio-btn" class="apib-btn">
+            <div class="la-line-scale apib-loading la-sm">
+                <div></div><div></div><div></div><div></div><div></div>
+            </div>
+            <div class="apib-pause">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"><path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/></svg>
+                <span data-en="Reciter M. Ayyub">القارئ محمد أيوب</span>
+            </div>
+            <div class="apib-play">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"><path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/></svg>
+                <span data-en="Reciter M. Ayyub">القارئ محمد أيوب</span>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <div class="track-info">
+                <div class="track-name" id="track-name">سورة الفاتحة</div>
+                <div class="track-reciter" data-en="Quran Recitation">تلاوة حجازية خاشعة</div>
+            </div>
+            
+            <div class="control-buttons">
+                <button class="ctrl-btn" id="prev-btn" title="السورة السابقة"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="ctrl-btn play-pause-btn" id="main-play-btn" title="تشغيل / إيقاف"><i class="fa-solid fa-play" id="main-icon"></i></button>
+                <button class="ctrl-btn" id="next-btn" title="السورة التالية"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. شاشة التحميل (Preloader) ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 800);
+        });
+
+        // --- 2. حركات النزول (Scroll Animations) ---
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // --- 3. جلب الحالة من GitHub ودعم اللغتين ---
+        let isEnglish = false;
+        let globalStatusData = null;
+
+        async function fetchStatus() {
+            try {
+                const response = await fetch('status.json?v=' + new Date().getTime());
+                if (!response.ok) throw new Error('Network error');
+                globalStatusData = await response.json();
+                updateStatusUI();
+            } catch (error) {
+                document.getElementById('stat-subs').innerText = 'N/A';
+                document.getElementById('stat-avail').innerText = 'N/A';
+                document.getElementById('stat-online').innerText = 'N/A';
+            }
+        }
+
+        function updateStatusUI() {
+            if(!globalStatusData) return;
+            document.getElementById('stat-subs').innerText = globalStatusData.subscribers + ' 👤';
+            
+            const availElement = document.getElementById('stat-avail');
+            if (globalStatusData.isAvailable) {
+                availElement.innerHTML = isEnglish ? '<span class="status-icon online">Open ✔️</span>' : '<span class="status-icon online">متاحة ✔️</span>';
+            } else {
+                availElement.innerHTML = isEnglish ? '<span class="status-icon offline">Full ❌</span>' : '<span class="status-icon offline">مكتملة ❌</span>';
+            }
+
+            const onlineElement = document.getElementById('stat-online');
+            if (globalStatusData.isOnline) {
+                onlineElement.innerHTML = isEnglish ? '<span class="status-icon online">Online 🟢</span>' : '<span class="status-icon online">متصل 🟢</span>';
+            } else {
+                onlineElement.innerHTML = isEnglish ? '<span class="status-icon offline">Maintenance 🔴</span>' : '<span class="status-icon offline">متوقف للصيانة 🔴</span>';
+            }
+        }
+        fetchStatus();
+
+        // --- 4. سكريبت تغيير اللغة (Language Toggle) ---
+        const langBtn = document.getElementById('lang-btn');
+        langBtn.addEventListener('click', () => {
+            isEnglish = !isEnglish;
+            document.documentElement.dir = isEnglish ? 'ltr' : 'rtl';
+            document.documentElement.lang = isEnglish ? 'en' : 'ar';
+            langBtn.innerText = isEnglish ? 'AR' : 'EN';
+
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (!el.dataset.ar) {
+                    el.dataset.ar = el.innerHTML;
+                }
+                el.innerHTML = isEnglish ? el.dataset.en : el.dataset.ar;
+            });
+            updateStatusUI();
+        });
+
+        // --- 5. الأسئلة الشائعة ---
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // --- 6. مشغل القرآن الكريم الـ 114 سورة ---
+        const audio = document.getElementById('bg-audio');
+        const sideRadioBtn = document.getElementById('side-radio-btn');
+        const mainPlayBtn = document.getElementById('main-play-btn');
+        const mainIcon = document.getElementById('main-icon');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const trackNameDisplay = document.getElementById('track-name');
+        
+        let isPlaying = false;
+
+        const playlist = [
+            { name: "سورة الفاتحة", src: "https://media.altilawat.com/1Ayoub.mp3" },
+            { name: "سورة البقرة", src: "https://media.altilawat.com/2Ayoub.mp3" },
+            { name: "سورة آل عمران", src: "https://media.altilawat.com/3Ayoub.mp3" },
+            { name: "سورة النساء", src: "https://media.altilawat.com/4Ayoub.mp3" },
+            { name: "سورة المائدة", src: "https://media.altilawat.com/5Ayoub.mp3" },
+            { name: "سورة الأنعام", src: "https://media.altilawat.com/6Ayoub.mp3" },
+            { name: "سورة الأعراف", src: "https://media.altilawat.com/7Ayoub.mp3" },
+            { name: "سورة الأنفال", src: "https://media.altilawat.com/8Ayoub.mp3" },
+            { name: "سورة التوبة", src: "https://media.altilawat.com/9Ayoub.mp3" },
+            { name: "سورة يونس", src: "https://media.altilawat.com/10Ayoub.mp3" },
+            { name: "سورة هود", src: "https://media.altilawat.com/11Ayoub.mp3" },
+            { name: "سورة يوسف", src: "https://media.altilawat.com/12Ayoub.mp3" },
+            { name: "سورة الرعد", src: "https://media.altilawat.com/13Ayoub.mp3" },
+            { name: "سورة إبراهيم", src: "https://media.altilawat.com/14Ayoub.mp3" },
+            { name: "سورة الحجر", src: "https://media.altilawat.com/15Ayoub.mp3" },
+            { name: "سورة النحل", src: "https://media.altilawat.com/16Ayoub.mp3" },
+            { name: "سورة الإسراء", src: "https://media.altilawat.com/17Ayoub.mp3" },
+            { name: "سورة الكهف", src: "https://media.altilawat.com/18Ayoub.mp3" },
+            { name: "سورة مريم", src: "https://media.altilawat.com/19Ayoub.mp3" },
+            { name: "سورة طه", src: "https://media.altilawat.com/20Ayoub.mp3" },
+            { name: "سورة الأنبياء", src: "https://media.altilawat.com/21Ayoub.mp3" },
+            { name: "سورة الحج", src: "https://media.altilawat.com/22Ayoub.mp3" },
+            { name: "سورة المؤمنون", src: "https://media.altilawat.com/23Ayoub.mp3" },
+            { name: "سورة النور", src: "https://media.altilawat.com/24Ayoub.mp3" },
+            { name: "سورة الفرقان", src: "https://media.altilawat.com/25Ayoub.mp3" },
+            { name: "سورة الشعراء", src: "https://media.altilawat.com/26Ayoub.mp3" },
+            { name: "سورة النمل", src: "https://media.altilawat.com/27Ayoub.mp3" },
+            { name: "سورة القصص", src: "https://media.altilawat.com/28Ayoub.mp3" },
+            { name: "سورة العنكبوت", src: "https://media.altilawat.com/29Ayoub.mp3" },
+            { name: "سورة الروم", src: "https://media.altilawat.com/30Ayoub.mp3" },
+            { name: "سورة لقمان", src: "https://media.altilawat.com/31Ayoub.mp3" },
+            { name: "سورة السجدة", src: "https://media.altilawat.com/32Ayoub.mp3" },
+            { name: "سورة الأحزاب", src: "https://media.altilawat.com/33Ayoub.mp3" },
+            { name: "سورة سبأ", src: "https://media.altilawat.com/34Ayoub.mp3" },
+            { name: "سورة فاطر", src: "https://media.altilawat.com/35Ayoub.mp3" },
+            { name: "سورة يس", src: "https://media.altilawat.com/36Ayoub.mp3" },
+            { name: "سورة الصافات", src: "https://media.altilawat.com/37Ayoub.mp3" },
+            { name: "سورة ص", src: "https://media.altilawat.com/38Ayoub.mp3" },
+            { name: "سورة الزمر", src: "https://media.altilawat.com/39Ayoub.mp3" },
+            { name: "سورة غافر", src: "https://media.altilawat.com/40Ayoub.mp3" },
+            { name: "سورة فصلت", src: "https://media.altilawat.com/41Ayoub.mp3" },
+            { name: "سورة الشورى", src: "https://media.altilawat.com/42Ayoub.mp3" },
+            { name: "سورة الزخرف", src: "https://media.altilawat.com/43Ayoub.mp3" },
+            { name: "سورة الدخان", src: "https://media.altilawat.com/44Ayoub.mp3" },
+            { name: "سورة الجاثية", src: "https://media.altilawat.com/45Ayoub.mp3" },
+            { name: "سورة الأحقاف", src: "https://media.altilawat.com/46Ayoub.mp3" },
+            { name: "سورة محمد", src: "https://media.altilawat.com/47Ayoub.mp3" },
+            { name: "سورة الفتح", src: "https://media.altilawat.com/48Ayoub.mp3" },
+            { name: "سورة الحجرات", src: "https://media.altilawat.com/49Ayoub.mp3" },
+            { name: "سورة ق", src: "https://media.altilawat.com/50Ayoub.mp3" },
+            { name: "سورة الذاريات", src: "https://media.altilawat.com/51Ayoub.mp3" },
+            { name: "سورة الطور", src: "https://media.altilawat.com/52Ayoub.mp3" },
+            { name: "سورة النجم", src: "https://media.altilawat.com/53Ayoub.mp3" },
+            { name: "سورة القمر", src: "https://media.altilawat.com/54Ayoub.mp3" },
+            { name: "سورة الرحمن", src: "https://media.altilawat.com/55Ayoub.mp3" },
+            { name: "سورة الواقعة", src: "https://media.altilawat.com/56Ayoub.mp3" },
+            { name: "سورة الحديد", src: "https://media.altilawat.com/57Ayoub.mp3" },
+            { name: "سورة المجادلة", src: "https://media.altilawat.com/58Ayoub.mp3" },
+            { name: "سورة الحشر", src: "https://media.altilawat.com/59Ayoub.mp3" },
+            { name: "سورة الممتحنة", src: "https://media.altilawat.com/60Ayoub.mp3" },
+            { name: "سورة الصف", src: "https://media.altilawat.com/61Ayoub.mp3" },
+            { name: "سورة الجمعة", src: "https://media.altilawat.com/62Ayoub.mp3" },
+            { name: "سورة المنافقون", src: "https://media.altilawat.com/63Ayoub.mp3" },
+            { name: "سورة التغابن", src: "https://media.altilawat.com/64Ayoub.mp3" },
+            { name: "سورة الطلاق", src: "https://media.altilawat.com/65Ayoub.mp3" },
+            { name: "سورة التحريم", src: "https://media.altilawat.com/66Ayoub.mp3" },
+            { name: "سورة الملك", src: "https://media.altilawat.com/67Ayoub.mp3" },
+            { name: "سورة القلم", src: "https://media.altilawat.com/68Ayoub.mp3" },
+            { name: "سورة الحاقة", src: "https://media.altilawat.com/69Ayoub.mp3" },
+            { name: "سورة المعارج", src: "https://media.altilawat.com/70Ayoub.mp3" },
+            { name: "سورة نوح", src: "https://media.altilawat.com/71Ayoub.mp3" },
+            { name: "سورة الجن", src: "https://media.altilawat.com/72Ayoub.mp3" },
+            { name: "سورة المزمل", src: "https://media.altilawat.com/73Ayoub.mp3" },
+            { name: "سورة المدثر", src: "https://media.altilawat.com/74Ayoub.mp3" },
+            { name: "سورة القيامة", src: "https://media.altilawat.com/75Ayoub.mp3" },
+            { name: "سورة الإنسان", src: "https://media.altilawat.com/76Ayoub.mp3" },
+            { name: "سورة المرسلات", src: "https://media.altilawat.com/77Ayoub.mp3" },
+            { name: "سورة النبأ", src: "https://media.altilawat.com/78Ayoub.mp3" },
+            { name: "سورة النازعات", src: "https://media.altilawat.com/79Ayoub.mp3" },
+            { name: "سورة عبس", src: "https://media.altilawat.com/80Ayoub.mp3" },
+            { name: "سورة التكوير", src: "https://media.altilawat.com/81Ayoub.mp3" },
+            { name: "سورة الانفطار", src: "https://media.altilawat.com/82Ayoub.mp3" },
+            { name: "سورة المطففين", src: "https://media.altilawat.com/83Ayoub.mp3" },
+            { name: "سورة الانشقاق", src: "https://media.altilawat.com/84Ayoub.mp3" },
+            { name: "سورة البروج", src: "https://media.altilawat.com/85Ayoub.mp3" },
+            { name: "سورة الطارق", src: "https://media.altilawat.com/86Ayoub.mp3" },
+            { name: "سورة الأعلى", src: "https://media.altilawat.com/87Ayoub.mp3" },
+            { name: "سورة الغاشية", src: "https://media.altilawat.com/88Ayoub.mp3" },
+            { name: "سورة الفجر", src: "https://media.altilawat.com/89Ayoub.mp3" },
+            { name: "سورة البلد", src: "https://media.altilawat.com/90Ayoub.mp3" },
+            { name: "سورة الشمس", src: "https://media.altilawat.com/91Ayoub.mp3" },
+            { name: "سورة الليل", src: "https://media.altilawat.com/92Ayoub.mp3" },
+            { name: "سورة الضحى", src: "https://media.altilawat.com/93Ayoub.mp3" },
+            { name: "سورة الشرح", src: "https://media.altilawat.com/94Ayoub.mp3" },
+            { name: "سورة التين", src: "https://media.altilawat.com/95Ayoub.mp3" },
+            { name: "سورة العلق", src: "https://media.altilawat.com/96Ayoub.mp3" },
+            { name: "سورة القدر", src: "https://media.altilawat.com/97Ayoub.mp3" },
+            { name: "سورة البينة", src: "https://media.altilawat.com/98Ayoub.mp3" },
+            { name: "سورة الزلزلة", src: "https://media.altilawat.com/99Ayoub.mp3" },
+            { name: "سورة العاديات", src: "https://media.altilawat.com/100Ayoub.mp3" },
+            { name: "سورة القارعة", src: "https://media.altilawat.com/101Ayoub.mp3" },
+            { name: "سورة التكاثر", src: "https://media.altilawat.com/102Ayoub.mp3" },
+            { name: "سورة العصر", src: "https://media.altilawat.com/103Ayoub.mp3" },
+            { name: "سورة الهمزة", src: "https://media.altilawat.com/104Ayoub.mp3" },
+            { name: "سورة الفيل", src: "https://media.altilawat.com/105Ayoub.mp3" },
+            { name: "سورة قريش", src: "https://media.altilawat.com/106Ayoub.mp3" },
+            { name: "سورة الماعون", src: "https://media.altilawat.com/107Ayoub.mp3" },
+            { name: "سورة الكوثر", src: "https://media.altilawat.com/108Ayoub.mp3" },
+            { name: "سورة الكافرون", src: "https://media.altilawat.com/109Ayoub.mp3" },
+            { name: "سورة النصر", src: "https://media.altilawat.com/110Ayoub.mp3" },
+            { name: "سورة المسد", src: "https://media.altilawat.com/111Ayoub.mp3" },
+            { name: "سورة الإخلاص", src: "https://media.altilawat.com/112Ayoub.mp3" },
+            { name: "سورة الفلق", src: "https://media.altilawat.com/113Ayoub.mp3" },
+            { name: "سورة الناس", src: "https://media.altilawat.com/114Ayoub.mp3" }
+        ];
+
+        let currentTrackIndex = 0;
+
+        function updateAudioUI(playing) {
+            if (playing) {
+                sideRadioBtn.classList.add('playing');
+                mainIcon.classList.remove('fa-play');
+                mainIcon.classList.add('fa-pause');
+            } else {
+                sideRadioBtn.classList.remove('playing');
+                mainIcon.classList.remove('fa-pause');
+                mainIcon.classList.add('fa-play');
+            }
+            trackNameDisplay.innerText = playlist[currentTrackIndex].name;
+        }
+
+        function forcePlay() {
+            if (!audio.src || audio.src === window.location.href) {
+                audio.src = playlist[currentTrackIndex].src;
+            }
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
+                    updateAudioUI(true);
+                }).catch(error => {
+                    isPlaying = false;
+                    updateAudioUI(false);
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', forcePlay);
+        window.addEventListener('load', forcePlay);
+
+        document.body.addEventListener('click', function(e) {
+            if (!isPlaying && !e.target.closest('.faq-item') && !e.target.closest('.btn-buy') && !e.target.closest('.lang-btn')) {
+                forcePlay();
+            }
+        });
+
+        audio.addEventListener('ended', function() {
+            currentTrackIndex++;
+            if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
+        });
+
+        nextBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentTrackIndex++;
+            if (currentTrackIndex >= playlist.length) currentTrackIndex = 0;
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
+        });
+
+        prevBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            currentTrackIndex--;
+            if (currentTrackIndex < 0) currentTrackIndex = playlist.length - 1;
+            audio.src = playlist[currentTrackIndex].src;
+            forcePlay();
+        });
+
+        function togglePlayPause(e) {
+            e.stopPropagation();
+            if (audio.paused) {
+                forcePlay();
+            } else {
+                audio.pause();
+                isPlaying = false;
+                updateAudioUI(false);
+            }
+        }
+
+        mainPlayBtn.addEventListener('click', togglePlayPause);
+        sideRadioBtn.addEventListener('click', togglePlayPause);
+
+    </script>
+
+</body>
+</html>
